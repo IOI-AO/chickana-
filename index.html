@@ -1,286 +1,381 @@
-
-<!DOCTYPE html> <html lang="ar" dir="rtl"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <title>Chickana Menu</title>
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="manifest" href="manifest.json">
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-<style>
-    body { font-family: 'Cairo', sans-serif; background-color: #ffffff; color: #1a1a1a; margin: 0; padding-bottom: 120px; }
-    .hero-section { background-image: url('jpg.58304.jpg'); background-size: cover; background-position: center; height: 220px; width: 100%; border-bottom: 4px solid #e61e25; }
-    .menu-card { background: #f9f9f9; border-radius: 15px; margin: 12px; padding: 15px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
-    .category-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .section-title { color: #e61e25; font-size: 1.4rem; font-weight: 900; border-bottom: 2px solid #e61e25; margin-bottom: 12px; text-align: center; padding-bottom: 5px; }
-    .item-row { padding: 12px 0; border-bottom: 1px solid #e5e5e5; }
-    .item-row:last-child { border-bottom: none; }
-    .item-top { display: flex; justify-content: space-between; align-items: center; }
-    .item-name { font-weight: 900; font-size: 1rem; flex: 1; padding-left: 10px; }
-    /* أزرار الزيادة والنقصان */
-    .controls-wrapper { display: flex; align-items: center; gap: 8px; }
-    .price-box { font-weight: 900; color: #e61e25; font-size: 0.95rem; margin-left: 5px; min-width: 50px; text-align: left; }
-    .btn-action { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; cursor: pointer; user-select: none; transition: 0.1s; }
-    .btn-plus { background: #ffcc00; color: #000; border: 1px solid #cca300; }
-    .btn-plus:active { transform: scale(0.9); }
-    .btn-minus { background: #e0e0e0; color: #666; border: 1px solid #ccc; }
-    .btn-minus:active { transform: scale(0.9); }
-    .qty-num { font-weight: 900; min-width: 15px; text-align: center; color: #e61e25; font-size: 1.1rem; }
-    .item-desc { font-size: 0.75rem; color: #666; margin-top: 4px; line-height: 1.4; }
-    .addons-box { background: #fff8e1; border: 2px dashed #ffb300; border-radius: 10px; padding: 10px; margin-top: 15px; }
-    .addons-title { color: #d84315; font-weight: 900; text-align: center; margin-bottom: 10px; }
-    #cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #e61e25; color: #fff; padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; font-weight: 900; cursor: pointer; border-radius: 20px 20px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.2); }
-    #order-modal { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 200; overflow-y: auto; padding: 15px; }
-    input, select, textarea { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px; border: 1px solid #ddd; font-family: 'Cairo'; background: #fff; }
-    .footer { background: #ffcc00; color: #000; padding: 30px; text-align: center; margin-top: 30px; border-radius: 30px 30px 0 0; }
-</style>
-</head> <body>
-<div class="hero-section"></div>
-<div class="max-w-xl mx-auto" id="menu-container">
-    <div class="menu-card" style="border-top: 4px solid #ffcc00;">
-        <img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?auto=format&fit=crop&w=800&q=80" alt="Offers" class="category-img">
-        <h2 class="section-title">🔥 عروض التوفير</h2>
-        <script>
-            // دالة لإنشاء الأصناف لتقليل الكود
-            function createItem(name, price, desc = '') {
-                document.write(`
-                    <div class="item-row">
-                        <div class="item-top">
-                            <span class="item-name">${name}</span>
-                            <div class="controls-wrapper">
-                                <span class="price-box">${price} LE</span>
-                                <div class="btn-action btn-minus" onclick="changeQty('${name}', ${price}, -1)">-</div>
-                                <span class="qty-num" id="qty-${name}">0</span>
-                                <div class="btn-action btn-plus" onclick="changeQty('${name}', ${price}, 1)">+</div>
-                            </div>
-                        </div>
-                        ${desc ? `<p class="item-desc">${desc}</p>` : ''}
-                    </div>
-                `);
-            }
-        </script>
-        <script>
-            createItem('عرض الدويتو (2 بيتزا)', 380, 'على ذوقك');
-            createItem('عرض التريو (3 بيتزا)', 550, 'على ذوقك');
-        </script>
-    </div>
-    <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" alt="Pizza" class="category-img">
-        <h2 class="section-title">🍕 كلاسيك CLASSIC</h2>
-        <script>
-            createItem('مارجريتا', 160, 'اكسترا موزاريلا و صوص بيتزا');
-            createItem('خضراوات سوبريم', 160, 'زيتون، فلفل أخضر، طماطم، بصل، ذرة حلوة');
-        </script>
-        <h2 class="section-title mt-6">🍗 بيتزا الدجاج</h2>
-        <script>
-            createItem('تشيكن باربكيو', 199, 'دجاج مشوي، بصل، طماطم، صوص باربكيو');
-            createItem('تشيكن رانش', 199, 'دجاج مشوي، فلفل أخضر، طماطم، صوص رانش');
-            createItem('سبايسى تشيكن رانش', 199, 'دجاج مشوي، هلابينو، صوص رانش وفولكانو');
-            createItem('تشيكن مكسيكانا', 199, 'دجاج، هلابينو، ذرة حلوة، صوص ديناميت');
-        </script>
-        <h2 class="section-title mt-6">💥 كرانشي تشيكن</h2>
-        <script>
-            createItem('كرانشي تشيكن رانش', 199, 'دجاج مقرمش، صوص رانش وفولكانو');
-            createItem('كرانشي تشيكن دايناميت', 199, 'دجاج مقرمش، هلابينو، صوص ديناميت وفولكانو');
-        </script>
-        <h2 class="section-title mt-6">🥩 بيتزا اللحوم</h2>
-        <script>
-            createItem('ببروني', 199, 'بيبروني');
-            createItem('سوبر سوبريم', 199, 'ببروني، سلامي، بيف، هوت دوج، خضروات');
-            createItem('عشاق اللحوم', 199, 'ببروني، سلامي، بيف توبينج، هوت دوج');
-        </script>
-        <div class="addons-box">
-            <div class="addons-title">📌 إضافات البيتزا (حسب الرغبة)</div>
-            <script>
-                createItem('إضافة حشو أطراف', 65);
-                createItem('إضافة بيتزا نص ونص', 20);
-            </script>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chickana Menu</title>
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { width: 100%; max-width: 100vw; overflow-x: hidden; }
+        body { font-family: 'Cairo', sans-serif; background-color: #ffffff; color: #1a1a1a; padding-bottom: 120px; direction: rtl; }
+        /* صورتك الخاصة — ضع اسم الملف هنا */
+        .hero-section {
+            background-image: url('jpg.58304.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 220px;
+            width: 100%;
+            border-bottom: 4px solid #e61e25;
+            background-color: #1a1a1a;
+        }
+        .menu-card { background: #f9f9f9; border-radius: 15px; margin: 12px; padding: 15px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
+        .category-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .section-title { color: #e61e25; font-size: 1.4rem; font-weight: 900; border-bottom: 2px solid #e61e25; margin-bottom: 12px; text-align: center; padding-bottom: 5px; margin-top: 20px; }
+        .section-title:first-child { margin-top: 0; }
+        .item-row { padding: 12px 0; border-bottom: 1px solid #e5e5e5; }
+        .item-row:last-child { border-bottom: none; }
+        .item-top { display: flex; justify-content: space-between; align-items: center; }
+        .item-name { font-weight: 900; font-size: 1rem; flex: 1; padding-left: 10px; }
+        .controls-wrapper { display: flex; align-items: center; gap: 8px; }
+        .price-box { font-weight: 900; color: #e61e25; font-size: 0.95rem; margin-left: 5px; min-width: 50px; text-align: left; }
+        .btn-action { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; cursor: pointer; user-select: none; transition: 0.1s; border: none; }
+        .btn-plus { background: #ffcc00; color: #000; border: 1px solid #cca300 !important; }
+        .btn-plus:active { transform: scale(0.9); }
+        .btn-minus { background: #e0e0e0; color: #666; border: 1px solid #ccc !important; }
+        .btn-minus:active { transform: scale(0.9); }
+        .qty-num { font-weight: 900; min-width: 15px; text-align: center; color: #e61e25; font-size: 1.1rem; }
+        .item-desc { font-size: 0.75rem; color: #666; margin-top: 4px; line-height: 1.4; }
+        /* ملاحظة الصنف — تظهر عند الإضافة */
+        .item-note-box { display: none; margin-top: 8px; animation: slideDown 0.2s ease; }
+        .item-note-box.visible { display: block; }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .item-note-input { width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px dashed #ffb300; font-family: 'Cairo'; font-size: 0.85rem; background: #fffdf0; color: #333; resize: none; min-height: 36px; }
+        .item-note-input:focus { outline: none; border-color: #e61e25; background: #fff; }
+        .item-note-label { font-size: 0.75rem; color: #d84315; font-weight: 700; margin-bottom: 3px; display: block; }
+        .addons-box { background: #fff8e1; border: 2px dashed #ffb300; border-radius: 10px; padding: 10px; margin-top: 15px; }
+        .addons-title { color: #d84315; font-weight: 900; text-align: center; margin-bottom: 10px; }
+        #cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #e61e25; color: #fff; padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; font-weight: 900; cursor: pointer; border-radius: 20px 20px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.2); }
+        #order-modal { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 200; overflow-y: auto; padding: 15px; }
+        .order-modal-inner { max-width: 576px; margin: 8px auto; background: #fff; padding: 24px; border-radius: 16px; border: 2px solid #e61e25; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        input[type=text], input[type=tel], select, textarea.form-field { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px; border: 1px solid #ddd; font-family: 'Cairo'; background: #fff; }
+        .footer { background: #ffcc00; color: #000; padding: 30px 20px; text-align: center; margin-top: 30px; border-radius: 30px 30px 0 0; }
+        .footer-qr-wrapper { margin: 15px auto; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .footer-qr-img { width: 160px; height: 160px; border-radius: 12px; border: 4px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .footer-qr-label { font-weight: 900; font-size: 1rem; color: #333; }
+        .footer-qr-sublabel { font-size: 0.8rem; color: #555; font-weight: 700; }
+        .order-notes-card { background: #f0f7ff; border: 1px solid #b3d4fc; border-radius: 10px; padding: 14px; margin: 12px; }
+        .order-notes-card label { display: block; font-weight: 900; color: #1565c0; text-align: center; margin-bottom: 8px; font-size: 1rem; }
+        .order-notes-card textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: 'Cairo'; background: #fff; min-height: 70px; resize: vertical; }
+    </style>
+</head>
+<body>
+    <div class="hero-section"></div>
+    <div style="max-width:576px;margin:0 auto;">
+        <div class="menu-card" style="border-top:4px solid #ffcc00;">
+            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80" alt="Pizza Offers" class="category-img">
+            <h2 class="section-title">🔥 عروض التوفير</h2>
+            <div id="items-offers"></div>
+        </div>
+        <div class="menu-card">
+            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" alt="Pizza" class="category-img">
+            <h2 class="section-title">🍕 كلاسيك CLASSIC</h2>
+            <div id="items-classic"></div>
+            <h2 class="section-title">🍗 بيتزا الدجاج</h2>
+            <div id="items-chicken-pizza"></div>
+            <h2 class="section-title">💥 كرانشي تشيكن</h2>
+            <div id="items-crunchy"></div>
+            <h2 class="section-title">🥩 بيتزا اللحوم</h2>
+            <div id="items-meat-pizza"></div>
+            <div class="addons-box">
+                <div class="addons-title">📌 إضافات البيتزا (حسب الرغبة)</div>
+                <div id="items-pizza-addons"></div>
+            </div>
+        </div>
+        <div class="menu-card">
+            <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=80" alt="Chicken Sandwiches" class="category-img">
+            <h2 class="section-title">🍔 ساندوتشات تشيكانا</h2>
+            <div id="items-sandwiches"></div>
+            <h2 class="section-title">🍔 ساندوتشات (سنجل ودبل)</h2>
+            <div id="items-single-double"></div>
+            <div class="addons-box">
+                <div class="addons-title">🥤 حول ساندوتشك لكومبو</div>
+                <div id="items-combo"></div>
+            </div>
+        </div>
+        <div class="menu-card" style="border-top:4px solid #ffcc00;">
+            <h2 class="section-title" style="margin-top:0;">🔥 عروض التوفير الإضافية</h2>
+            <div id="items-extra-offers"></div>
+        </div>
+        <div class="menu-card">
+            <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=80" alt="Fried Chicken" class="category-img">
+            <h2 class="section-title" style="margin-top:0;">🍗 وجبات الأكيلة</h2>
+            <div id="items-meals"></div>
+            <h2 class="section-title">🍗 وجبات مسحب وجريل</h2>
+            <div id="items-grilled"></div>
+            <h2 class="section-title">🍗 CHICKEN MEALS</h2>
+            <p style="text-align:center;color:#6b7280;font-weight:700;margin-bottom:12px;font-size:0.875rem;">💡 الوجبة تقدم مع: بطاطس + كول سلو + خبز</p>
+            <div id="items-chicken-meals"></div>
+            <h2 class="section-title">💥 وجبات الدجاج المقرمشة</h2>
+            <div id="items-crispy"></div>
+        </div>
+        <div class="menu-card">
+            <h2 class="section-title" style="margin-top:0;">🧒 وجبات أطفال</h2>
+            <div id="items-kids"></div>
+        </div>
+        <div class="menu-card">
+            <h2 class="section-title" style="margin-top:0;">🍟 الأصناف الجانبية</h2>
+            <div id="items-sides"></div>
+        </div>
+        <div class="menu-card">
+            <h2 class="section-title" style="margin-top:0;">🥤 Drinks</h2>
+            <div id="items-drinks"></div>
+        </div>
+        <div class="order-notes-card">
+            <label>📝 ملاحظات على الطلب (اختياري)</label>
+            <textarea id="global-notes" placeholder="اكتب أي ملاحظات خاصة بطلبك هنا... مثال: بدون بصل، إضافة صوص خاص، إلخ"></textarea>
+        </div>
+        <div class="footer">
+            <p style="font-weight:900;font-size:1.2rem;margin-bottom:6px;">تابعنا على فيسبوك</p>
+            <p style="font-size:0.85rem;color:#444;font-weight:700;margin-bottom:5px;">امسح الكود للدخول على صفحتنا مباشرة</p>
+            <div class="footer-qr-wrapper">
+                <a href="https://www.facebook.com/share/1Fi6poQg5q/?mibextid=wwXIfr" target="_blank" rel="noopener">
+                    <img class="footer-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Fi6poQg5q%2F%3Fmibextid%3DwwXIfr" alt="QR Code - Chickana Facebook">
+                </a>
+                <span class="footer-qr-label">📘 Chickana على فيسبوك</span>
+                <span class="footer-qr-sublabel">أو اضغط على الكود للفتح مباشرة</span>
+            </div>
+            <div style="height:1px;background:rgba(0,0,0,0.1);margin:20px 0;"></div>
+            <p style="font-weight:900;font-size:1.1rem;">📞 للطلب والاستفسار:</p>
+            <p style="font-weight:700;font-size:1.3rem;color:#dc2626;margin-top:6px;">01277720430</p>
+            <p style="font-weight:700;font-size:1.3rem;color:#dc2626;">01277720980</p>
         </div>
     </div>
-    <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" alt="Sandwiches" class="category-img">
-        <h2 class="section-title">🍔 ساندوتشات تشيكانا</h2>
-        <script>
-            createItem('تشيكن جريل', 145, 'قطع دجاج جريل، خضار جريل، مايونيز');
-            createItem('تشيكن بولو', 165, 'قطع استربس، جبنة موتزاريلا، طماطم، رومي مدخن');
-            createItem('تويستر بطاطس', 65, 'بطاطس فرايز مع خس، طماطم، صوص الثومية');
-            createItem('تويستر فراخ', 99, 'قطع صدور مقرمشة، خس، طماطم، واختيارك من الصوص');
-            createItem('TNT فاير', 150, 'صدور تندر، رومي مدخن، هلابينو، صوص ديناميت');
-            createItem('TNT سوبريم', 150, 'صدور تيندر، حبش مدخن، صوص رانش');
-            createItem('بيج تشيكا', 150, 'دجاج فيليه، موتزاريلا، بيف مدخن، حلقات بصل، هني ماسترد');
-        </script>
-        <h2 class="section-title mt-6">🍔 ساندوتشات (سنجل ودبل)</h2>
-        <script>
-            createItem('كلاسيك (سنجل)', 115, 'صدر دجاج، صوص جبنة، هني ماسترد');
-            createItem('كلاسيك (دبل)', 145);
-            createItem('فولكانو (سنجل)', 115, 'صدر دجاج، صوص جبنة، صوص فولكانو');
-            createItem('فولكانو (دبل)', 145);
-            createItem('رانش (سنجل)', 129, 'صدر دجاج، رومي مدخن، صوص رانش');
-            createItem('رانش (دبل)', 155);
-            createItem('ديناميت (سنجل)', 129, 'صدر دجاج، رومي مدخن، صوص ديناميت');
-            createItem('ديناميت (دبل)', 155);
-            createItem('بيج بوس (سنجل)', 129, 'صدر دجاج، بيف مدخن، صوص باربكيو');
-            createItem('بيج بوس (دبل)', 155);
-            createItem('تشيزي (سنجل)', 139, 'صدر دجاج، أصابع موتزاريلا، صوص جبنة');
-            createItem('تشيزي (دبل)', 165);
-            createItem('بيف برجر (سنجل)', 120);
-            createItem('بيف برجر (دبل)', 150);
-        </script>
-        <div class="addons-box">
-            <div class="addons-title">🥤 حول ساندوتشك لكومبو</div>
-            <script>
-                createItem('إضافة كومبو عادي', 55);
-                createItem('إضافة كومبو لارج', 120);
-            </script>
+    <div id="cart-bar" onclick="showOrderForm()">
+        <span>🛒 سلة الطلبات (<span id="cart-count">0</span>)</span>
+        <span id="cart-total">0 LE</span>
+    </div>
+    <div id="order-modal">
+        <div class="order-modal-inner">
+            <h2 style="font-size:1.5rem;font-weight:900;color:#dc2626;margin-bottom:16px;text-align:center;">🛒 مراجعة طلبك</h2>
+            <div id="cart-items-list" style="margin-bottom:16px;border-bottom:1px solid #e5e7eb;padding-bottom:16px;font-size:0.875rem;font-weight:700;"></div>
+            <input type="text" id="cust-name" placeholder="الاسم بالكامل (إجباري)" required>
+            <input type="tel" id="cust-phone" placeholder="رقم التليفون (إجباري)" required>
+            <select id="delivery-type" onchange="updateDelivery()">
+                <option value="inside">داخل النادي (استلام من الفرع)</option>
+                <option value="outside">توصيل خارج النادي (+40 جنيه)</option>
+            </select>
+            <textarea class="form-field" id="cust-address" placeholder="العنوان بالتفصيل (للتوصيل الخارجي)" style="display:none;"></textarea>
+            <div style="font-size:1.25rem;font-weight:700;color:#dc2626;margin:16px 0;text-align:center;border-top:1px solid #e5e7eb;padding-top:16px;">
+                إجمالي الحساب: <span id="final-total">0</span> LE
+            </div>
+            <button onclick="sendOrder()" style="width:100%;background:#16a34a;color:#fff;font-weight:900;padding:16px 0;border-radius:12px;font-size:1.125rem;margin-bottom:12px;border:none;cursor:pointer;font-family:'Cairo';box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);">تأكيد وإرسال واتساب ✅</button>
+            <button onclick="closeOrderForm()" style="width:100%;background:transparent;color:#6b7280;padding:8px 0;font-weight:700;border:none;cursor:pointer;font-family:'Cairo';">رجوع للمنيو</button>
         </div>
     </div>
-    <div class="menu-card" style="border-top: 4px solid #ffcc00;">
-        <h2 class="section-title">🔥 عروض التوفير الإضافية</h2>
-        <script>
-            createItem('2 تويست + بطاطس', 205);
-            createItem('تويست + بطاطس + ريزو', 205);
-            createItem('قطعتين فراخ + بطاطس + ريزو', 230);
-            createItem('قطعتين فراخ + بطاطس + ساندوتش تويست', 230);
-            createItem('ساندوتش كلاسيك كبير + ريزو + بطاطس', 230);
-            createItem('ساندوتش كلاسيك كبير + قطعتين فراخ + بطاطس', 230);
-            createItem('عرض التوينز: 2 ساندوتش سنجل + بطاطس', 250);
-            createItem('عرض التوينز: 2 ساندوتش دبل + بطاطس', 330);
-            createItem('ساندوتش سنجل + بطاطس + كول سلو', 170);
-        </script>
-    </div>
-    <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=80" alt="Fried Chicken" class="category-img">
-        <h2 class="section-title">🍗 وجبات الأكيلة</h2>
-        <script>
-            createItem('سنجلاوي', 360, 'ريزو، 4 قطع دجاج، كول سلو، تشيز فرايز');
-            createItem('مكساوي توستر', 290, 'فرايز، قطعتين دجاج، توستر، ريزو');
-            createItem('مكساوي', 260, 'فرايز، قطعتين دجاج، ساندوتش سنجل، ريزو');
-        </script>
-        <h2 class="section-title mt-6">🍗 وجبات مسحب وجريل</h2>
-        <script>
-            createItem('سناك مسحب', 170, '4 قطع مسحب، أرز، بطاطس');
-            createItem('دينر مسحب', 210, '6 قطع مسحب، أرز، بطاطس، كول سلو');
-            createItem('سناك جريل', 170, '6 قطع جريل، أرز، بطاطس');
-            createItem('دينر جريل', 210, '10 قطع جريل، أرز، بطاطس، كول سلو');
-        </script>
-        <h2 class="section-title mt-6">🍗 CHICKEN MEALS</h2>
-        <p class="text-center text-gray-500 font-bold mb-3 text-sm">💡 الوجبة تقدم مع: بطاطس + كول سلو + خبز</p>
-        <script>
-            createItem('6 قطع دجاج (دجاج وبس)', 519);
-            createItem('6 قطع دجاج (وجبة كاملة)', 619);
-            createItem('9 قطع دجاج (دجاج وبس)', 669);
-            createItem('9 قطع دجاج (وجبة كاملة)', 769);
-            createItem('12 قطعة دجاج (دجاج وبس)', 819);
-            createItem('12 قطعة دجاج (وجبة كاملة)', 919);
-        </script>
-        <h2 class="section-title mt-6">💥 وجبات الدجاج المقرمشة</h2>
-        <script>
-            createItem('سناك بوكس', 170, 'قطعتين دجاج، بطاطس، أرز مبهر');
-            createItem('دينر بوكس', 210, '3 قطع دجاج، بطاطس، كول سلو، أرز مبهر');
-            createItem('استربس سناك', 170, '3 قطع استربس، بطاطس، أرز، باربيكيو');
-            createItem('استربس دينر', 210, '5 قطع استربس، بطاطس، كول سلو، أرز');
-            createItem('وجبة 10 قطع استربس', 580);
-            createItem('وجبة 15 قطعة استربس', 680);
-            createItem('عائلاوي (9 قطع)', 890, '9 قطع دجاج، 3 ريزو، كول سلو وبطاطس عائلي');
-            createItem('مكساوي فاميلي', 790, '6 قطع دجاج، 3 ساندوتش سنجل، كول سلو، بطاطس، كولا لتر');
-        </script>
-    </div>
-    <div class="menu-card">
-        <h2 class="section-title">🧒 وجبات أطفال</h2>
-        <script>
-            createItem('وجبة أطفال (قطعتين استربس)', 99);
-            createItem('وجبة أطفال (قطعة دجاج)', 99);
-            createItem('وجبة أطفال (بوب كورن)', 99);
-        </script>
-    </div>
-    <div class="menu-card">
-        <h2 class="section-title">🍟 الأصناف الجانبية</h2>
-        <script>
-            createItem('روزيتو (وسط)', 95);
-            createItem('روزيتو (عائلي)', 130);
-            createItem('كول سلو', 35);
-            createItem('ريزو (وسط)', 95);
-            createItem('ريزو (عائلي)', 130);
-            createItem('أرز مبهر', 55);
-            createItem('بوب كورن صدور', 79);
-            createItem('ماك أند تشيز (وسط)', 95);
-            createItem('ماك أند تشيز (عائلي)', 130);
-            createItem('بطاطس فرايز (وسط)', 40);
-            createItem('بطاطس فرايز (عائلي)', 65);
-            createItem('أصابع موتزاريلا', 75);
-            createItem('تشيز فرايز', 69);
-            createItem('تشيز فرايز فراخ', 99);
-        </script>
-    </div>
-    <div class="menu-card">
-        <h2 class="section-title">🥤 Drinks</h2>
-        <script>
-            createItem('كانز صغير', 20);
-            createItem('كانز كبير', 25);
-            createItem('لتر بيبسي', 50);
-            createItem('مياه كبير', 20);
-            createItem('مياه صغير', 10);
-            createItem('عصير', 15);
-        </script>
-    </div>
-    <div class="footer">
-        <p class="font-black text-lg">للطلب والاستفسار:</p>
-        <p class="font-bold text-xl text-red-600 mt-2">01277720430</p>
-        <p class="font-bold text-xl text-red-600">01277720980</p>
-    </div>
-</div>
-<div id="cart-bar" onclick="showOrderForm()">
-    <span>🛒 سلة الطلبات (<span id="cart-count">0</span>)</span>
-    <span id="cart-total">0 LE</span>
-</div>
-<div id="order-modal">
-    <div class="max-w-xl mx-auto bg-white p-6 rounded-2xl border-2 border-red-600 mt-2 shadow-2xl">
-        <h2 class="text-2xl font-black text-red-600 mb-4 text-center">🛒 مراجعة طلبك</h2>
-        <div id="cart-items-list" class="mb-4 border-b border-gray-200 pb-4 text-sm font-bold"></div>
-        <input type="text" id="cust-name" placeholder="الاسم بالكامل (إجباري)" required>
-        <input type="tel" id="cust-phone" placeholder="رقم التليفون (إجباري)" required>
-        <select id="delivery-type" onchange="updateDelivery()">
-            <option value="inside">داخل النادي (استلام من الفرع)</option>
-            <option value="outside">توصيل خارج النادي (+40 جنيه)</option>
-        </select>
-        <textarea id="cust-address" placeholder="العنوان بالتفصيل (للتوصيل الخارجي)" style="display:none;"></textarea>
-        <textarea id="extra-notes" placeholder="أي ملاحظات إضافية؟"></textarea>
-        <div class="text-xl font-bold text-red-600 my-4 text-center border-t pt-4">إجمالي الحساب: <span id="final-total">0</span> LE</div>
-        <button onclick="sendOrder()" class="w-full bg-green-600 text-white font-black py-4 rounded-xl text-lg mb-3 shadow-lg">تأكيد وإرسال واتساب ✅</button>
-        <button onclick="closeOrderForm()" class="w-full text-gray-500 py-2 font-bold">رجوع للمنيو</button>
-    </div>
-</div>
 <script>
     let cart = [];
+    let itemNotes = {};
     let deliveryFee = 0;
+    const menuSections = {
+        'offers': [
+            { name: 'عرض الدويتو (2 بيتزا)', price: 380, desc: 'على ذوقك' },
+            { name: 'عرض التريو (3 بيتزا)', price: 550, desc: 'على ذوقك' },
+        ],
+        'classic': [
+            { name: 'مارجريتا', price: 160, desc: 'اكسترا موزاريلا و صوص بيتزا' },
+            { name: 'خضراوات سوبريم', price: 160, desc: 'زيتون، فلفل أخضر، طماطم، بصل، ذرة حلوة' },
+        ],
+        'chicken-pizza': [
+            { name: 'تشيكن باربكيو', price: 199, desc: 'دجاج مشوي، بصل، طماطم، صوص باربكيو' },
+            { name: 'تشيكن رانش', price: 199, desc: 'دجاج مشوي، فلفل أخضر، طماطم، صوص رانش' },
+            { name: 'سبايسى تشيكن رانش', price: 199, desc: 'دجاج مشوي، هلابينو، صوص رانش وفولكانو' },
+            { name: 'تشيكن مكسيكانا', price: 199, desc: 'دجاج، هلابينو، ذرة حلوة، صوص ديناميت' },
+        ],
+        'crunchy': [
+            { name: 'كرانشي تشيكن رانش', price: 199, desc: 'دجاج مقرمش، صوص رانش وفولكانو' },
+            { name: 'كرانشي تشيكن دايناميت', price: 199, desc: 'دجاج مقرمش، هلابينو، صوص ديناميت وفولكانو' },
+        ],
+        'meat-pizza': [
+            { name: 'ببروني', price: 199, desc: 'بيبروني' },
+            { name: 'سوبر سوبريم', price: 199, desc: 'ببروني، سلامي، بيف، هوت دوج، خضروات' },
+            { name: 'عشاق اللحوم', price: 199, desc: 'ببروني، سلامي، بيف توبينج، هوت دوج' },
+        ],
+        'pizza-addons': [
+            { name: 'إضافة حشو أطراف', price: 65 },
+            { name: 'إضافة بيتزا نص ونص', price: 20 },
+        ],
+        'sandwiches': [
+            { name: 'تشيكن جريل', price: 145, desc: 'قطع دجاج جريل، خضار جريل، مايونيز' },
+            { name: 'تشيكن بولو', price: 165, desc: 'قطع استربس، جبنة موتزاريلا، طماطم، رومي مدخن' },
+            { name: 'تويستر بطاطس', price: 65, desc: 'بطاطس فرايز مع خس، طماطم، صوص الثومية' },
+            { name: 'تويستر فراخ', price: 99, desc: 'قطع صدور مقرمشة، خس، طماطم، واختيارك من الصوص' },
+            { name: 'TNT فاير', price: 150, desc: 'صدور تندر، رومي مدخن، هلابينو، صوص ديناميت' },
+            { name: 'TNT سوبريم', price: 150, desc: 'صدور تيندر، حبش مدخن، صوص رانش' },
+            { name: 'بيج تشيكا', price: 150, desc: 'دجاج فيليه، موتزاريلا، بيف مدخن، حلقات بصل، هني ماسترد' },
+        ],
+        'single-double': [
+            { name: 'كلاسيك (سنجل)', price: 115, desc: 'صدر دجاج، صوص جبنة، هني ماسترد' },
+            { name: 'كلاسيك (دبل)', price: 145 },
+            { name: 'فولكانو (سنجل)', price: 115, desc: 'صدر دجاج، صوص جبنة، صوص فولكانو' },
+            { name: 'فولكانو (دبل)', price: 145 },
+            { name: 'رانش (سنجل)', price: 129, desc: 'صدر دجاج، رومي مدخن، صوص رانش' },
+            { name: 'رانش (دبل)', price: 155 },
+            { name: 'ديناميت (سنجل)', price: 129, desc: 'صدر دجاج، رومي مدخن، صوص ديناميت' },
+            { name: 'ديناميت (دبل)', price: 155 },
+            { name: 'بيج بوس (سنجل)', price: 129, desc: 'صدر دجاج، بيف مدخن، صوص باربكيو' },
+            { name: 'بيج بوس (دبل)', price: 155 },
+            { name: 'تشيزي (سنجل)', price: 139, desc: 'صدر دجاج، أصابع موتزاريلا، صوص جبنة' },
+            { name: 'تشيزي (دبل)', price: 165 },
+            { name: 'بيف برجر (سنجل)', price: 120 },
+            { name: 'بيف برجر (دبل)', price: 150 },
+        ],
+        'combo': [
+            { name: 'إضافة كومبو عادي', price: 55 },
+            { name: 'إضافة كومبو لارج', price: 120 },
+        ],
+        'extra-offers': [
+            { name: '2 تويست + بطاطس', price: 205 },
+            { name: 'تويست + بطاطس + ريزو', price: 205 },
+            { name: 'قطعتين فراخ + بطاطس + ريزو', price: 230 },
+            { name: 'قطعتين فراخ + بطاطس + ساندوتش تويست', price: 230 },
+            { name: 'ساندوتش كلاسيك كبير + ريزو + بطاطس', price: 230 },
+            { name: 'ساندوتش كلاسيك كبير + قطعتين فراخ + بطاطس', price: 230 },
+            { name: 'عرض التوينز: 2 ساندوتش سنجل + بطاطس', price: 250 },
+            { name: 'عرض التوينز: 2 ساندوتش دبل + بطاطس', price: 330 },
+            { name: 'ساندوتش سنجل + بطاطس + كول سلو', price: 170 },
+        ],
+        'meals': [
+            { name: 'سنجلاوي', price: 360, desc: 'ريزو، 4 قطع دجاج، كول سلو، تشيز فرايز' },
+            { name: 'مكساوي توستر', price: 290, desc: 'فرايز، قطعتين دجاج، توستر، ريزو' },
+            { name: 'مكساوي', price: 260, desc: 'فرايز، قطعتين دجاج، ساندوتش سنجل، ريزو' },
+        ],
+        'grilled': [
+            { name: 'سناك مسحب', price: 170, desc: '4 قطع مسحب، أرز، بطاطس' },
+            { name: 'دينر مسحب', price: 210, desc: '6 قطع مسحب، أرز، بطاطس، كول سلو' },
+            { name: 'سناك جريل', price: 170, desc: '6 قطع جريل، أرز، بطاطس' },
+            { name: 'دينر جريل', price: 210, desc: '10 قطع جريل، أرز، بطاطس، كول سلو' },
+        ],
+        'chicken-meals': [
+            { name: '6 قطع دجاج (دجاج وبس)', price: 519 },
+            { name: '6 قطع دجاج (وجبة كاملة)', price: 619 },
+            { name: '9 قطع دجاج (دجاج وبس)', price: 669 },
+            { name: '9 قطع دجاج (وجبة كاملة)', price: 769 },
+            { name: '12 قطعة دجاج (دجاج وبس)', price: 819 },
+            { name: '12 قطعة دجاج (وجبة كاملة)', price: 919 },
+        ],
+        'crispy': [
+            { name: 'سناك بوكس', price: 170, desc: 'قطعتين دجاج، بطاطس، أرز مبهر' },
+            { name: 'دينر بوكس', price: 210, desc: '3 قطع دجاج، بطاطس، كول سلو، أرز مبهر' },
+            { name: 'استربس سناك', price: 170, desc: '3 قطع استربس، بطاطس، أرز، باربيكيو' },
+            { name: 'استربس دينر', price: 210, desc: '5 قطع استربس، بطاطس، كول سلو، أرز' },
+            { name: 'وجبة 10 قطع استربس', price: 580 },
+            { name: 'وجبة 15 قطعة استربس', price: 680 },
+            { name: 'عائلاوي (9 قطع)', price: 890, desc: '9 قطع دجاج، 3 ريزو، كول سلو وبطاطس عائلي' },
+            { name: 'مكساوي فاميلي', price: 790, desc: '6 قطع دجاج، 3 ساندوتش سنجل، كول سلو، بطاطس، كولا لتر' },
+        ],
+        'kids': [
+            { name: 'وجبة أطفال (قطعتين استربس)', price: 99 },
+            { name: 'وجبة أطفال (قطعة دجاج)', price: 99 },
+            { name: 'وجبة أطفال (بوب كورن)', price: 99 },
+        ],
+        'sides': [
+            { name: 'روزيتو (وسط)', price: 95 },
+            { name: 'روزيتو (عائلي)', price: 130 },
+            { name: 'كول سلو', price: 35 },
+            { name: 'ريزو (وسط)', price: 95 },
+            { name: 'ريزو (عائلي)', price: 130 },
+            { name: 'أرز مبهر', price: 55 },
+            { name: 'بوب كورن صدور', price: 79 },
+            { name: 'ماك أند تشيز (وسط)', price: 95 },
+            { name: 'ماك أند تشيز (عائلي)', price: 130 },
+            { name: 'بطاطس فرايز (وسط)', price: 40 },
+            { name: 'بطاطس فرايز (عائلي)', price: 65 },
+            { name: 'أصابع موتزاريلا', price: 75 },
+            { name: 'تشيز فرايز', price: 69 },
+            { name: 'تشيز فرايز فراخ', price: 99 },
+        ],
+        'drinks': [
+            { name: 'كانز صغير', price: 20 },
+            { name: 'كانز كبير', price: 25 },
+            { name: 'لتر بيبسي', price: 50 },
+            { name: 'مياه كبير', price: 20 },
+            { name: 'مياه صغير', price: 10 },
+            { name: 'عصير', price: 15 },
+        ],
+    };
+    function safeId(name) {
+        return 'item-' + name.replace(/[^a-zA-Z0-9]/g, '_');
+    }
+    function renderSection(containerId, items) {
+        const container = document.getElementById('items-' + containerId);
+        if (!container) return;
+        items.forEach(item => {
+            const id = safeId(item.name);
+            const div = document.createElement('div');
+            div.className = 'item-row';
+            div.innerHTML = `
+                <div class="item-top">
+                    <span class="item-name">${item.name}</span>
+                    <div class="controls-wrapper">
+                        <span class="price-box">${item.price} LE</span>
+                        <button class="btn-action btn-minus" onclick="changeQty('${item.name.replace(/'/g,"\\'")}', ${item.price}, -1)">−</button>
+                        <span class="qty-num" id="qty-${id}">0</span>
+                        <button class="btn-action btn-plus" onclick="changeQty('${item.name.replace(/'/g,"\\'")}', ${item.price}, 1)">+</button>
+                    </div>
+                </div>
+                ${item.desc ? `<p class="item-desc">${item.desc}</p>` : ''}
+                <div class="item-note-box" id="note-box-${id}">
+                    <span class="item-note-label">✏️ ملاحظة خاصة على هذا الصنف (اختياري)</span>
+                    <textarea class="item-note-input" id="note-${id}" placeholder="مثال: بدون بصل، إضافة صوص..." rows="2" onchange="saveNote('${item.name.replace(/'/g,"\\'")}', this.value)"></textarea>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+    function saveNote(name, value) {
+        if (value.trim()) itemNotes[name] = value.trim();
+        else delete itemNotes[name];
+    }
     function changeQty(name, price, change) {
         const idx = cart.findIndex(i => i.name === name);
         if (idx > -1) {
             cart[idx].qty += change;
-            if (cart[idx].qty <= 0) cart.splice(idx, 1);
+            if (cart[idx].qty <= 0) { cart.splice(idx, 1); delete itemNotes[name]; }
         } else if (change > 0) {
             cart.push({ name, price, qty: 1 });
         }
-        // تحديث الرقم الظاهر في المنيو
-        const currentItem = cart.find(i => i.name === name);
-        const qtyElement = document.getElementById(`qty-${name}`);
-        if(qtyElement) {
-            qtyElement.innerText = currentItem ? currentItem.qty : 0;
+        const current = cart.find(i => i.name === name);
+        const id = safeId(name);
+        const qtyEl = document.getElementById('qty-' + id);
+        const noteBox = document.getElementById('note-box-' + id);
+        if (qtyEl) qtyEl.innerText = current ? current.qty : 0;
+        if (noteBox) {
+            if (current && current.qty > 0) {
+                noteBox.classList.add('visible');
+            } else {
+                noteBox.classList.remove('visible');
+                const noteInput = document.getElementById('note-' + id);
+                if (noteInput) noteInput.value = '';
+                delete itemNotes[name];
+            }
         }
         updateUI();
     }
     function updateUI() {
-        const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+        const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
         const count = cart.reduce((s, i) => s + i.qty, 0);
         document.getElementById('cart-bar').style.display = cart.length > 0 ? 'flex' : 'none';
-        document.getElementById('cart-total').innerText = total + " LE";
+        document.getElementById('cart-total').innerText = total + ' LE';
         document.getElementById('cart-count').innerText = count;
         document.getElementById('final-total').innerText = total + deliveryFee;
     }
     function showOrderForm() {
         document.getElementById('order-modal').style.display = 'block';
-        let html = "";
+        let html = '';
         cart.forEach(i => {
-            html += `<div class="flex justify-between py-2 border-b text-gray-700">
-                <span>${i.name} <span class="text-red-500">(x${i.qty})</span></span>
+            const note = itemNotes[i.name];
+            html += `<div style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#374151;display:flex;justify-content:space-between;gap:8px;">
+                <div style="flex:1;">
+                    <span>${i.name} <span style="color:#ef4444;">(x${i.qty})</span></span>
+                    ${note ? `<div style="font-size:0.75rem;color:#666;margin-top:2px;">📝 ${note}</div>` : ''}
+                </div>
                 <span>${i.price * i.qty} LE</span>
             </div>`;
         });
@@ -295,22 +390,49 @@
         updateUI();
     }
     function sendOrder() {
-        const name = document.getElementById('cust-name').value;
-        const phone = document.getElementById('cust-phone').value;
-        const address = document.getElementById('cust-address').value;
+        const name = document.getElementById('cust-name').value.trim();
+        const phone = document.getElementById('cust-phone').value.trim();
+        const address = document.getElementById('cust-address').value.trim();
         const type = document.getElementById('delivery-type').value;
-        const notes = document.getElementById('extra-notes').value;
-        if(!name || !phone || (type === 'outside' && !address)) return alert("يا بطل، راجع البيانات الناقصة (الاسم، الرقم، والعنوان لو دليفري)!");
-        let txt = `*طلب جديد - Chickana*%0A`;
-        txt += `*الاسم:* ${name}%0A*الهاتف:* ${phone}%0A*الاستلام:* ${type === 'inside' ? 'داخل النادي' : 'توصيل خارج'}%0A`;
-        if(type === 'outside') txt += `*العنوان:* ${address}%0A`;
-        txt += `--------------------------%0A`;
-        cart.forEach(i => txt += `▪️ ${i.name} (x${i.qty}) = ${i.price * i.qty} LE%0A`);
-        if(deliveryFee > 0) txt += `--------------------------%0A*دليفري:* 40 LE%0A`;
-        if(notes) txt += `*ملاحظات الزبون:* ${notes}%0A`;
-        txt += `====================%0A`;
-        txt += `*إجمالي الحساب:* ${document.getElementById('final-total').innerText} LE`;
+        const globalNotes = document.getElementById('global-notes').value.trim();
+        
+        if (!name || !phone || (type === 'outside' && !address))
+            return alert('يا بطل، راجع البيانات الناقصة (الاسم، الرقم، والعنوان لو دليفري)!');
+            
+        // بناء الرسالة بشكل نضيف ومنظم
+        let txt = `طلب جديد - Chickana\n\n`;
+        txt += `الاسم: ${name}\n`;
+        txt += `الهاتف: ${phone}\n`;
+        txt += `الاستلام: ${type === 'inside' ? 'داخل النادي' : 'توصيل خارج'}\n`;
+        
+        if (type === 'outside') {
+            txt += `العنوان: ${address}\n`;
+        }
+        
+        txt += `\nالطلبات:\n`;
+        cart.forEach(i => {
+            txt += `${i.name} (العدد: ${i.qty}) بـ ${i.price * i.qty} LE`;
+            // لو في ملاحظة على الصنف ده هتتكتب تحته
+            if (itemNotes[i.name]) {
+                txt += `\nملاحظة: ${itemNotes[i.name]}`;
+            }
+            txt += '\n'; // سطر جديد للصنف اللي بعده
+        });
+        
+        if (deliveryFee > 0) {
+            txt += `\nخدمة التوصيل: 40 LE\n`;
+        }
+        
+        if (globalNotes) {
+            txt += `ملاحظات عامة: ${globalNotes}\n`;
+        }
+        
+        txt += `\nإجمالي الحساب: ${document.getElementById('final-total').innerText} LE`;
+        
+        // فتح الواتساب وإرسال الرسالة
         window.open(`https://wa.me/201277720430?text=${encodeURIComponent(txt)}`, '_blank');
     }
+    Object.entries(menuSections).forEach(([key, items]) => renderSection(key, items));
 </script>
-</body> </html>
+</body>
+</html>
