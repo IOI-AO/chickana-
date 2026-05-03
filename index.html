@@ -3,78 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chickana Menu</title>
-    <meta name="theme-color" content="#ffffff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Chickana Menu - Full</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { width: 100%; max-width: 100vw; overflow-x: hidden; }
-        body { font-family: 'Cairo', sans-serif; background-color: #ffffff; color: #1a1a1a; padding-bottom: 120px; direction: rtl; }
-        /* صورتك الخاصة — ضع اسم الملف هنا */
-        .hero-section {
-            background-image: url('jpg.58304.jpg');
-            background-size: cover;
-            background-position: center;
-            height: 220px;
-            width: 100%;
-            border-bottom: 4px solid #e61e25;
-            background-color: #1a1a1a;
-        }
-        .menu-card { background: #f9f9f9; border-radius: 15px; margin: 12px; padding: 15px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
-        .category-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        body { font-family: 'Cairo', sans-serif; background-color: #ffffff; color: #1a1a1a; padding-bottom: 140px; direction: rtl; }
+        .hero-section { background-image: url('jpg.58304.jpg'); background-size: cover; background-position: center; height: 220px; width: 100%; border-bottom: 4px solid #e61e25; background-color: #1a1a1a; }
+        .menu-card { background: #f9f9f9; border-radius: 15px; margin: 12px; padding: 15px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .category-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; border: 2px solid #fff; }
         .section-title { color: #e61e25; font-size: 1.4rem; font-weight: 900; border-bottom: 2px solid #e61e25; margin-bottom: 12px; text-align: center; padding-bottom: 5px; margin-top: 20px; }
-        .section-title:first-child { margin-top: 0; }
         .item-row { padding: 12px 0; border-bottom: 1px solid #e5e5e5; }
-        .item-row:last-child { border-bottom: none; }
         .item-top { display: flex; justify-content: space-between; align-items: center; }
         .item-name { font-weight: 900; font-size: 1rem; flex: 1; padding-left: 10px; }
         .controls-wrapper { display: flex; align-items: center; gap: 8px; }
-        .price-box { font-weight: 900; color: #e61e25; font-size: 0.95rem; margin-left: 5px; min-width: 50px; text-align: left; }
-        .btn-action { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; cursor: pointer; user-select: none; transition: 0.1s; border: none; }
+        .price-box { font-weight: 900; color: #e61e25; font-size: 0.95rem; min-width: 50px; text-align: left; }
+        .btn-action { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: none; transition: 0.1s; }
         .btn-plus { background: #ffcc00; color: #000; border: 1px solid #cca300 !important; }
-        .btn-plus:active { transform: scale(0.9); }
         .btn-minus { background: #e0e0e0; color: #666; border: 1px solid #ccc !important; }
-        .btn-minus:active { transform: scale(0.9); }
-        .qty-num { font-weight: 900; min-width: 15px; text-align: center; color: #e61e25; font-size: 1.1rem; }
-        .item-desc { font-size: 0.75rem; color: #666; margin-top: 4px; line-height: 1.4; }
-        /* ملاحظة الصنف — تظهر عند الإضافة */
+        .qty-num { font-weight: 900; color: #e61e25; font-size: 1.1rem; min-width: 15px; text-align: center; }
+        .item-desc { font-size: 0.75rem; color: #666; margin-top: 4px; }
         .item-note-box { display: none; margin-top: 8px; animation: slideDown 0.2s ease; }
         .item-note-box.visible { display: block; }
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-6px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .item-note-input { width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px dashed #ffb300; font-family: 'Cairo'; font-size: 0.85rem; background: #fffdf0; color: #333; resize: none; min-height: 36px; }
-        .item-note-input:focus { outline: none; border-color: #e61e25; background: #fff; }
-        .item-note-label { font-size: 0.75rem; color: #d84315; font-weight: 700; margin-bottom: 3px; display: block; }
+        .item-note-input { width: 100%; padding: 8px; border-radius: 8px; border: 1px dashed #ffb300; font-family: 'Cairo'; font-size: 0.85rem; background: #fffdf0; resize: none; }
         .addons-box { background: #fff8e1; border: 2px dashed #ffb300; border-radius: 10px; padding: 10px; margin-top: 15px; }
-        .addons-title { color: #d84315; font-weight: 900; text-align: center; margin-bottom: 10px; }
-        #cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #e61e25; color: #fff; padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; font-weight: 900; cursor: pointer; border-radius: 20px 20px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.2); }
+        #cart-summary-container { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; display: none; flex-direction: column; box-shadow: 0 -5px 20px rgba(0,0,0,0.2); border-radius: 20px 20px 0 0; overflow: hidden; }
+        #cart-summary-items { background: rgba(255, 255, 255, 0.95); padding: 10px 20px; font-size: 0.85rem; font-weight: 700; max-height: 90px; overflow-y: auto; text-align: right; border-top: 3px solid #e61e25; }
+        #cart-bar { background: #e61e25; color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 900; cursor: pointer; }
+        .summary-chip { background: #f3f4f6; color: #dc2626; padding: 3px 8px; border-radius: 6px; margin: 3px; display: inline-block; border: 1px solid #e5e7eb; }
         #order-modal { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 200; overflow-y: auto; padding: 15px; }
-        .order-modal-inner { max-width: 576px; margin: 8px auto; background: #fff; padding: 24px; border-radius: 16px; border: 2px solid #e61e25; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
-        input[type=text], input[type=tel], select, textarea.form-field { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px; border: 1px solid #ddd; font-family: 'Cairo'; background: #fff; }
-        .footer { background: #ffcc00; color: #000; padding: 30px 20px; text-align: center; margin-top: 30px; border-radius: 30px 30px 0 0; }
-        .footer-qr-wrapper { margin: 15px auto; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .footer-qr-img { width: 160px; height: 160px; border-radius: 12px; border: 4px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .footer-qr-label { font-weight: 900; font-size: 1rem; color: #333; }
-        .footer-qr-sublabel { font-size: 0.8rem; color: #555; font-weight: 700; }
-        .order-notes-card { background: #f0f7ff; border: 1px solid #b3d4fc; border-radius: 10px; padding: 14px; margin: 12px; }
-        .order-notes-card label { display: block; font-weight: 900; color: #1565c0; text-align: center; margin-bottom: 8px; font-size: 1rem; }
-        .order-notes-card textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: 'Cairo'; background: #fff; min-height: 70px; resize: vertical; }
+        .footer { background: #ffcc00; padding: 30px 20px; text-align: center; border-radius: 30px 30px 0 0; }
+        .footer-qr-img { width: 160px; height: 160px; border: 4px solid #fff; border-radius: 12px; margin: 10px auto; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <div class="hero-section"></div>
     <div style="max-width:576px;margin:0 auto;">
+        
         <div class="menu-card" style="border-top:4px solid #ffcc00;">
-            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80" alt="Pizza Offers" class="category-img">
+            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80" class="category-img">
             <h2 class="section-title">🔥 عروض التوفير</h2>
             <div id="items-offers"></div>
         </div>
+
         <div class="menu-card">
-            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" alt="Pizza" class="category-img">
+            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" class="category-img">
             <h2 class="section-title">🍕 كلاسيك CLASSIC</h2>
             <div id="items-classic"></div>
             <h2 class="section-title">🍗 بيتزا الدجاج</h2>
@@ -84,355 +58,235 @@
             <h2 class="section-title">🥩 بيتزا اللحوم</h2>
             <div id="items-meat-pizza"></div>
             <div class="addons-box">
-                <div class="addons-title">📌 إضافات البيتزا (حسب الرغبة)</div>
                 <div id="items-pizza-addons"></div>
             </div>
         </div>
+
         <div class="menu-card">
-            <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=80" alt="Chicken Sandwiches" class="category-img">
+            <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=80" class="category-img">
             <h2 class="section-title">🍔 ساندوتشات تشيكانا</h2>
             <div id="items-sandwiches"></div>
             <h2 class="section-title">🍔 ساندوتشات (سنجل ودبل)</h2>
             <div id="items-single-double"></div>
             <div class="addons-box">
-                <div class="addons-title">🥤 حول ساندوتشك لكومبو</div>
                 <div id="items-combo"></div>
             </div>
         </div>
+
         <div class="menu-card" style="border-top:4px solid #ffcc00;">
-            <h2 class="section-title" style="margin-top:0;">🔥 عروض التوفير الإضافية</h2>
+            <h2 class="section-title">🔥 عروض التوفير الإضافية</h2>
             <div id="items-extra-offers"></div>
         </div>
+
         <div class="menu-card">
-            <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=80" alt="Fried Chicken" class="category-img">
-            <h2 class="section-title" style="margin-top:0;">🍗 وجبات الأكيلة</h2>
+            <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=80" class="category-img">
+            <h2 class="section-title">🍗 وجبات الأكيلة</h2>
             <div id="items-meals"></div>
             <h2 class="section-title">🍗 وجبات مسحب وجريل</h2>
             <div id="items-grilled"></div>
             <h2 class="section-title">🍗 CHICKEN MEALS</h2>
-            <p style="text-align:center;color:#6b7280;font-weight:700;margin-bottom:12px;font-size:0.875rem;">💡 الوجبة تقدم مع: بطاطس + كول سلو + خبز</p>
             <div id="items-chicken-meals"></div>
             <h2 class="section-title">💥 وجبات الدجاج المقرمشة</h2>
             <div id="items-crispy"></div>
         </div>
-        <div class="menu-card">
-            <h2 class="section-title" style="margin-top:0;">🧒 وجبات أطفال</h2>
-            <div id="items-kids"></div>
-        </div>
-        <div class="menu-card">
-            <h2 class="section-title" style="margin-top:0;">🍟 الأصناف الجانبية</h2>
-            <div id="items-sides"></div>
-        </div>
-        <div class="menu-card">
-            <h2 class="section-title" style="margin-top:0;">🥤 Drinks</h2>
-            <div id="items-drinks"></div>
-        </div>
-        <div class="order-notes-card">
-            <label>📝 ملاحظات على الطلب (اختياري)</label>
-            <textarea id="global-notes" placeholder="اكتب أي ملاحظات خاصة بطلبك هنا... مثال: بدون بصل، إضافة صوص خاص، إلخ"></textarea>
-        </div>
+
+        <div class="menu-card"><h2 class="section-title">🧒 وجبات أطفال</h2><div id="items-kids"></div></div>
+        <div class="menu-card"><h2 class="section-title">🍟 الأصناف الجانبية</h2><div id="items-sides"></div></div>
+        <div class="menu-card"><h2 class="section-title">🥤 Drinks</h2><div id="items-drinks"></div></div>
+
         <div class="footer">
-            <p style="font-weight:900;font-size:1.2rem;margin-bottom:6px;">تابعنا على فيسبوك</p>
-            <p style="font-size:0.85rem;color:#444;font-weight:700;margin-bottom:5px;">امسح الكود للدخول على صفحتنا مباشرة</p>
-            <div class="footer-qr-wrapper">
-                <a href="https://www.facebook.com/share/1Fi6poQg5q/?mibextid=wwXIfr" target="_blank" rel="noopener">
-                    <img class="footer-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Fi6poQg5q%2F%3Fmibextid%3DwwXIfr" alt="QR Code - Chickana Facebook">
-                </a>
-                <span class="footer-qr-label">📘 Chickana على فيسبوك</span>
-                <span class="footer-qr-sublabel">أو اضغط على الكود للفتح مباشرة</span>
-            </div>
-            <div style="height:1px;background:rgba(0,0,0,0.1);margin:20px 0;"></div>
-            <p style="font-weight:900;font-size:1.1rem;">📞 للطلب والاستفسار:</p>
-            <p style="font-weight:700;font-size:1.3rem;color:#dc2626;margin-top:6px;">01277720430</p>
-            <p style="font-weight:700;font-size:1.3rem;color:#dc2626;">01277720980</p>
+            <p style="font-weight:900;">تابعنا على فيسبوك</p>
+            <a href="https://www.facebook.com/share/1Fi6poQg5q/?mibextid=wwXIfr" target="_blank">
+                <img class="footer-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Fi6poQg5q%2F%3Fmibextid%3DwwXIfr">
+            </a>
+            <p style="font-weight:900; margin-top:15px;">📞 للطلب والاستفسار:</p>
+            <p style="color:#dc2626; font-weight:900; font-size:1.2rem;">01277720430 - 01277720980</p>
         </div>
     </div>
-    <div id="cart-bar" onclick="showOrderForm()">
-        <span>🛒 سلة الطلبات (<span id="cart-count">0</span>)</span>
-        <span id="cart-total">0 LE</span>
+
+    <div id="cart-summary-container">
+        <div id="cart-summary-items"></div>
+        <div id="cart-bar" onclick="showOrderForm()">
+            <span>🛒 عرض السلة (<span id="cart-count">0</span>)</span>
+            <span id="cart-total">0 LE</span>
+        </div>
     </div>
+
     <div id="order-modal">
-        <div class="order-modal-inner">
-            <h2 style="font-size:1.5rem;font-weight:900;color:#dc2626;margin-bottom:16px;text-align:center;">🛒 مراجعة طلبك</h2>
-            <div id="cart-items-list" style="margin-bottom:16px;border-bottom:1px solid #e5e7eb;padding-bottom:16px;font-size:0.875rem;font-weight:700;"></div>
-            <input type="text" id="cust-name" placeholder="الاسم بالكامل (إجباري)" required>
-            <input type="tel" id="cust-phone" placeholder="رقم التليفون (إجباري)" required>
-            <select id="delivery-type" onchange="updateDelivery()">
-                <option value="inside">داخل النادي (استلام من الفرع)</option>
-                <option value="outside">توصيل خارج النادي (+40 جنيه)</option>
+        <div style="max-width:500px;margin:20px auto;background:#fff;padding:20px;border-radius:15px;border:2px solid #e61e25;">
+            <h2 style="text-align:center;font-weight:900;color:#dc2626;margin-bottom:15px;">مراجعة طلبك</h2>
+            <div id="cart-items-list" style="margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;"></div>
+            <input type="text" id="cust-name" placeholder="الاسم بالكامل (إجباري)" style="width:100%;padding:12px;margin:5px 0;border:1px solid #ddd;border-radius:8px;font-family:'Cairo';">
+            <input type="tel" id="cust-phone" placeholder="رقم الموبايل (11 رقم)" maxlength="11" style="width:100%;padding:12px;margin:5px 0;border:1px solid #ddd;border-radius:8px;font-family:'Cairo';">
+            <select id="delivery-type" onchange="updateDelivery()" style="width:100%;padding:12px;margin:5px 0;border:1px solid #ddd;border-radius:8px;font-family:'Cairo';">
+                <option value="inside">داخل النادي</option>
+                <option value="outside">توصيل خارج النادي (+40 ج)</option>
             </select>
-            <textarea class="form-field" id="cust-address" placeholder="العنوان بالتفصيل (للتوصيل الخارجي)" style="display:none;"></textarea>
-            <div style="font-size:1.25rem;font-weight:700;color:#dc2626;margin:16px 0;text-align:center;border-top:1px solid #e5e7eb;padding-top:16px;">
-                إجمالي الحساب: <span id="final-total">0</span> LE
-            </div>
-            <button onclick="sendOrder()" style="width:100%;background:#16a34a;color:#fff;font-weight:900;padding:16px 0;border-radius:12px;font-size:1.125rem;margin-bottom:12px;border:none;cursor:pointer;font-family:'Cairo';box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);">تأكيد وإرسال واتساب ✅</button>
-            <button onclick="closeOrderForm()" style="width:100%;background:transparent;color:#6b7280;padding:8px 0;font-weight:700;border:none;cursor:pointer;font-family:'Cairo';">رجوع للمنيو</button>
+            <textarea id="cust-address" placeholder="العنوان بالتفصيل" style="display:none;width:100%;padding:12px;margin:5px 0;border:1px solid #ddd;border-radius:8px;font-family:'Cairo';"></textarea>
+            <textarea id="global-notes" placeholder="ملاحظات عامة على الطلب..." style="width:100%;padding:12px;margin:5px 0;border:1px solid #ddd;border-radius:8px;font-family:'Cairo';"></textarea>
+            <div style="text-align:center;font-weight:900;font-size:1.3rem;color:#dc2626;margin:15px 0;">الإجمالي: <span id="final-total">0</span> LE</div>
+            <button onclick="sendOrder()" style="width:100%;background:#16a34a;color:#fff;padding:15px;border-radius:10px;font-weight:900;border:none;cursor:pointer;font-family:'Cairo';">تأكيد وإرسال واتساب ✅</button>
+            <button onclick="closeOrderForm()" style="width:100%;background:none;color:#666;padding:10px;border:none;cursor:pointer;font-family:'Cairo';">رجوع</button>
         </div>
     </div>
+
 <script>
-    let cart = [];
-    let itemNotes = {};
-    let deliveryFee = 0;
+    let cart = {}; let itemNotes = {}; let deliveryFee = 0;
+
+    // قاموس الكلمات الدلالية (البار + الواتساب)
+    const categoryPrefixes = {
+        'offers': 'عرض ', 'classic': 'بيتزا ', 'chicken-pizza': 'بيتزا ',
+        'crunchy': 'بيتزا ', 'meat-pizza': 'بيتزا ', 'pizza-addons': 'إضافة ',
+        'sandwiches': 'ساندوتش ', 'single-double': 'ساندوتش ', 'combo': 'إضافة ',
+        'extra-offers': 'عرض ', 'meals': 'وجبة ', 'grilled': 'وجبة ',
+        'chicken-meals': 'وجبة ', 'crispy': 'وجبة ', 'kids': 'وجبة أطفال ',
+        'sides': '', 'drinks': '' // فاضي للأصناف الجانبية والمشروبات كما طلبت
+    };
+
     const menuSections = {
-        'offers': [
-            { name: 'عرض الدويتو (2 بيتزا)', price: 380, desc: 'على ذوقك' },
-            { name: 'عرض التريو (3 بيتزا)', price: 550, desc: 'على ذوقك' },
-        ],
-        'classic': [
-            { name: 'مارجريتا', price: 160, desc: 'اكسترا موزاريلا و صوص بيتزا' },
-            { name: 'خضراوات سوبريم', price: 160, desc: 'زيتون، فلفل أخضر، طماطم، بصل، ذرة حلوة' },
-        ],
-        'chicken-pizza': [
-            { name: 'تشيكن باربكيو', price: 199, desc: 'دجاج مشوي، بصل، طماطم، صوص باربكيو' },
-            { name: 'تشيكن رانش', price: 199, desc: 'دجاج مشوي، فلفل أخضر، طماطم، صوص رانش' },
-            { name: 'سبايسى تشيكن رانش', price: 199, desc: 'دجاج مشوي، هلابينو، صوص رانش وفولكانو' },
-            { name: 'تشيكن مكسيكانا', price: 199, desc: 'دجاج، هلابينو، ذرة حلوة، صوص ديناميت' },
-        ],
-        'crunchy': [
-            { name: 'كرانشي تشيكن رانش', price: 199, desc: 'دجاج مقرمش، صوص رانش وفولكانو' },
-            { name: 'كرانشي تشيكن دايناميت', price: 199, desc: 'دجاج مقرمش، هلابينو، صوص ديناميت وفولكانو' },
-        ],
-        'meat-pizza': [
-            { name: 'ببروني', price: 199, desc: 'بيبروني' },
-            { name: 'سوبر سوبريم', price: 199, desc: 'ببروني، سلامي، بيف، هوت دوج، خضروات' },
-            { name: 'عشاق اللحوم', price: 199, desc: 'ببروني، سلامي، بيف توبينج، هوت دوج' },
-        ],
-        'pizza-addons': [
-            { name: 'إضافة حشو أطراف', price: 65 },
-            { name: 'إضافة بيتزا نص ونص', price: 20 },
-        ],
-        'sandwiches': [
-            { name: 'تشيكن جريل', price: 145, desc: 'قطع دجاج جريل، خضار جريل، مايونيز' },
-            { name: 'تشيكن بولو', price: 165, desc: 'قطع استربس، جبنة موتزاريلا، طماطم، رومي مدخن' },
-            { name: 'تويستر بطاطس', price: 65, desc: 'بطاطس فرايز مع خس، طماطم، صوص الثومية' },
-            { name: 'تويستر فراخ', price: 99, desc: 'قطع صدور مقرمشة، خس، طماطم، واختيارك من الصوص' },
-            { name: 'TNT فاير', price: 150, desc: 'صدور تندر، رومي مدخن، هلابينو، صوص ديناميت' },
-            { name: 'TNT سوبريم', price: 150, desc: 'صدور تيندر، حبش مدخن، صوص رانش' },
-            { name: 'بيج تشيكا', price: 150, desc: 'دجاج فيليه، موتزاريلا، بيف مدخن، حلقات بصل، هني ماسترد' },
-        ],
+        'offers': [{ name: 'عرض الدويتو (2 بيتزا)', price: 380 }, { name: 'عرض التريو (3 بيتزا)', price: 550 }],
+        'classic': [{ name: 'مارجريتا', price: 160 }, { name: 'خضراوات سوبريم', price: 160 }],
+        'chicken-pizza': [{ name: 'تشيكن باربكيو', price: 199 }, { name: 'تشيكن رانش', price: 199 }, { name: 'سبايسى تشيكن رانش', price: 199 }, { name: 'تشيكن مكسيكانا', price: 199 }],
+        'crunchy': [{ name: 'كرانشي تشيكن رانش', price: 199 }, { name: 'كرانشي تشيكن دايناميت', price: 199 }],
+        'meat-pizza': [{ name: 'ببروني', price: 199 }, { name: 'سوبر سوبريم', price: 199 }, { name: 'عشاق اللحوم', price: 199 }],
+        'pizza-addons': [{ name: 'إضافة حشو أطراف', price: 65 }, { name: 'إضافة بيتزا نص ونص', price: 20 }],
+        'sandwiches': [{ name: 'تشيكن جريل', price: 145 }, { name: 'تشيكن بولو', price: 165 }, { name: 'تويستر بطاطس', price: 65 }, { name: 'تويستر فراخ', price: 99 }, { name: 'TNT فاير', price: 150 }, { name: 'TNT سوبريم', price: 150 }, { name: 'بيج تشيكا', price: 150 }],
         'single-double': [
-            { name: 'كلاسيك (سنجل)', price: 115, desc: 'صدر دجاج، صوص جبنة، هني ماسترد' },
-            { name: 'كلاسيك (دبل)', price: 145 },
-            { name: 'فولكانو (سنجل)', price: 115, desc: 'صدر دجاج، صوص جبنة، صوص فولكانو' },
-            { name: 'فولكانو (دبل)', price: 145 },
-            { name: 'رانش (سنجل)', price: 129, desc: 'صدر دجاج، رومي مدخن، صوص رانش' },
-            { name: 'رانش (دبل)', price: 155 },
-            { name: 'ديناميت (سنجل)', price: 129, desc: 'صدر دجاج، رومي مدخن، صوص ديناميت' },
-            { name: 'ديناميت (دبل)', price: 155 },
-            { name: 'بيج بوس (سنجل)', price: 129, desc: 'صدر دجاج، بيف مدخن، صوص باربكيو' },
-            { name: 'بيج بوس (دبل)', price: 155 },
-            { name: 'تشيزي (سنجل)', price: 139, desc: 'صدر دجاج، أصابع موتزاريلا، صوص جبنة' },
-            { name: 'تشيزي (دبل)', price: 165 },
-            { name: 'بيف برجر (سنجل)', price: 120 },
-            { name: 'بيف برجر (دبل)', price: 150 },
+            { name: 'كلاسيك (سنجل)', price: 115 }, { name: 'كلاسيك (دبل)', price: 145 },
+            { name: 'فولكانو (سنجل)', price: 115 }, { name: 'فولكانو (دبل)', price: 145 },
+            { name: 'رانش (سنجل)', price: 129 }, { name: 'رانش (دبل)', price: 155 },
+            { name: 'ديناميت (سنجل)', price: 129 }, { name: 'ديناميت (دبل)', price: 155 },
+            { name: 'بيج بوس (سنجل)', price: 129 }, { name: 'بيج بوس (دبل)', price: 155 },
+            { name: 'تشيزي (سنجل)', price: 139 }, { name: 'تشيزي (دبل)', price: 165 },
+            { name: 'بيف برجر (سنجل)', price: 120 }, { name: 'بيف برجر (دبل)', price: 150 }
         ],
-        'combo': [
-            { name: 'إضافة كومبو عادي', price: 55 },
-            { name: 'إضافة كومبو لارج', price: 120 },
-        ],
+        'combo': [{ name: 'إضافة كومبو عادي', price: 55 }, { name: 'إضافة كومبو لارج', price: 120 }],
         'extra-offers': [
-            { name: '2 تويست + بطاطس', price: 205 },
-            { name: 'تويست + بطاطس + ريزو', price: 205 },
-            { name: 'قطعتين فراخ + بطاطس + ريزو', price: 230 },
-            { name: 'قطعتين فراخ + بطاطس + ساندوتش تويست', price: 230 },
-            { name: 'ساندوتش كلاسيك كبير + ريزو + بطاطس', price: 230 },
-            { name: 'ساندوتش كلاسيك كبير + قطعتين فراخ + بطاطس', price: 230 },
-            { name: 'عرض التوينز: 2 ساندوتش سنجل + بطاطس', price: 250 },
-            { name: 'عرض التوينز: 2 ساندوتش دبل + بطاطس', price: 330 },
-            { name: 'ساندوتش سنجل + بطاطس + كول سلو', price: 170 },
+            { name: '2 تويست + بطاطس', price: 205 }, { name: 'تويست + بطاطس + ريزو', price: 205 },
+            { name: 'قطعتين فراخ + بطاطس + ريزو', price: 230 }, { name: 'قطعتين فراخ + بطاطس + تويست', price: 230 },
+            { name: 'كلاسيك كبير + ريزو + بطاطس', price: 230 }, { name: 'كلاسيك كبير + قطعتين فراخ + بطاطس', price: 230 },
+            { name: 'عرض التوينز: 2 سنجل + بطاطس', price: 250 }, { name: 'عرض التوينز: 2 دبل + بطاطس', price: 330 },
+            { name: 'سنجل + بطاطس + كول سلو', price: 170 }
         ],
-        'meals': [
-            { name: 'سنجلاوي', price: 360, desc: 'ريزو، 4 قطع دجاج، كول سلو، تشيز فرايز' },
-            { name: 'مكساوي توستر', price: 290, desc: 'فرايز، قطعتين دجاج، توستر، ريزو' },
-            { name: 'مكساوي', price: 260, desc: 'فرايز، قطعتين دجاج، ساندوتش سنجل، ريزو' },
-        ],
-        'grilled': [
-            { name: 'سناك مسحب', price: 170, desc: '4 قطع مسحب، أرز، بطاطس' },
-            { name: 'دينر مسحب', price: 210, desc: '6 قطع مسحب، أرز، بطاطس، كول سلو' },
-            { name: 'سناك جريل', price: 170, desc: '6 قطع جريل، أرز، بطاطس' },
-            { name: 'دينر جريل', price: 210, desc: '10 قطع جريل، أرز، بطاطس، كول سلو' },
-        ],
+        'meals': [{ name: 'سنجلاوي', price: 360 }, { name: 'مكساوي توستر', price: 290 }, { name: 'مكساوي', price: 260 }],
+        'grilled': [{ name: 'سناك مسحب', price: 170 }, { name: 'دينر مسحب', price: 210 }, { name: 'سناك جريل', price: 170 }, { name: 'دينر جريل', price: 210 }],
         'chicken-meals': [
-            { name: '6 قطع دجاج (دجاج وبس)', price: 519 },
-            { name: '6 قطع دجاج (وجبة كاملة)', price: 619 },
-            { name: '9 قطع دجاج (دجاج وبس)', price: 669 },
-            { name: '9 قطع دجاج (وجبة كاملة)', price: 769 },
-            { name: '12 قطعة دجاج (دجاج وبس)', price: 819 },
-            { name: '12 قطعة دجاج (وجبة كاملة)', price: 919 },
+            { name: '6 قطع دجاج (بس)', price: 519 }, { name: '6 قطع دجاج (كاملة)', price: 619 },
+            { name: '9 قطع دجاج (بس)', price: 669 }, { name: '9 قطع دجاج (كاملة)', price: 769 },
+            { name: '12 قطعة دجاج (بس)', price: 819 }, { name: '12 قطعة دجاج (كاملة)', price: 919 }
         ],
         'crispy': [
-            { name: 'سناك بوكس', price: 170, desc: 'قطعتين دجاج، بطاطس، أرز مبهر' },
-            { name: 'دينر بوكس', price: 210, desc: '3 قطع دجاج، بطاطس، كول سلو، أرز مبهر' },
-            { name: 'استربس سناك', price: 170, desc: '3 قطع استربس، بطاطس، أرز، باربيكيو' },
-            { name: 'استربس دينر', price: 210, desc: '5 قطع استربس، بطاطس، كول سلو، أرز' },
-            { name: 'وجبة 10 قطع استربس', price: 580 },
-            { name: 'وجبة 15 قطعة استربس', price: 680 },
-            { name: 'عائلاوي (9 قطع)', price: 890, desc: '9 قطع دجاج، 3 ريزو، كول سلو وبطاطس عائلي' },
-            { name: 'مكساوي فاميلي', price: 790, desc: '6 قطع دجاج، 3 ساندوتش سنجل، كول سلو، بطاطس، كولا لتر' },
+            { name: 'سناك بوكس', price: 170 }, { name: 'دينر بوكس', price: 210 },
+            { name: 'استربس سناك', price: 170 }, { name: 'استربس دينر', price: 210 },
+            { name: 'وجبة 10 قطع استربس', price: 580 }, { name: 'وجبة 15 قطعة استربس', price: 680 },
+            { name: 'عائلاوي (9 قطع)', price: 890 }, { name: 'مكساوي فاميلي', price: 790 }
         ],
-        'kids': [
-            { name: 'وجبة أطفال (قطعتين استربس)', price: 99 },
-            { name: 'وجبة أطفال (قطعة دجاج)', price: 99 },
-            { name: 'وجبة أطفال (بوب كورن)', price: 99 },
-        ],
+        'kids': [{ name: 'وجبة أطفال استربس', price: 99 }, { name: 'وجبة أطفال قطعة دجاج', price: 99 }, { name: 'وجبة أطفال بوب كورن', price: 99 }],
         'sides': [
-            { name: 'روزيتو (وسط)', price: 95 },
-            { name: 'روزيتو (عائلي)', price: 130 },
-            { name: 'كول سلو', price: 35 },
-            { name: 'ريزو (وسط)', price: 95 },
-            { name: 'ريزو (عائلي)', price: 130 },
-            { name: 'أرز مبهر', price: 55 },
-            { name: 'بوب كورن صدور', price: 79 },
-            { name: 'ماك أند تشيز (وسط)', price: 95 },
-            { name: 'ماك أند تشيز (عائلي)', price: 130 },
-            { name: 'بطاطس فرايز (وسط)', price: 40 },
-            { name: 'بطاطس فرايز (عائلي)', price: 65 },
-            { name: 'أصابع موتزاريلا', price: 75 },
-            { name: 'تشيز فرايز', price: 69 },
-            { name: 'تشيز فرايز فراخ', price: 99 },
+            { name: 'روزيتو (وسط)', price: 95 }, { name: 'روزيتو (عائلي)', price: 130 },
+            { name: 'كول سلو', price: 35 }, { name: 'ريزو (وسط)', price: 95 },
+            { name: 'ريزو (عائلي)', price: 130 }, { name: 'أرز مبهر', price: 55 },
+            { name: 'بوب كورن صدور', price: 79 }, { name: 'ماك أند تشيز (وسط)', price: 95 },
+            { name: 'بطاطس فرايز (وسط)', price: 40 }, { name: 'أصابع موتزاريلا', price: 75 },
+            { name: 'تشيز فرايز', price: 69 }, { name: 'تشيز فرايز فراخ', price: 99 }
         ],
-        'drinks': [
-            { name: 'كانز صغير', price: 20 },
-            { name: 'كانز كبير', price: 25 },
-            { name: 'لتر بيبسي', price: 50 },
-            { name: 'مياه كبير', price: 20 },
-            { name: 'مياه صغير', price: 10 },
-            { name: 'عصير', price: 15 },
-        ],
+        'drinks': [{ name: 'كانز صغير', price: 20 }, { name: 'كانز كبير', price: 25 }, { name: 'لتر بيبسي', price: 50 }, { name: 'مياه كبير', price: 20 }, { name: 'مياه صغير', price: 10 }, { name: 'عصير', price: 15 }]
     };
-    function safeId(name) {
-        return 'item-' + name.replace(/[^a-zA-Z0-9]/g, '_');
-    }
+
     function renderSection(containerId, items) {
         const container = document.getElementById('items-' + containerId);
-        if (!container) return;
-        items.forEach(item => {
-            const id = safeId(item.name);
-            const div = document.createElement('div');
-            div.className = 'item-row';
-            div.innerHTML = `
+        if(!container) return;
+        items.forEach((item, index) => {
+            const itemId = `item-${containerId}-${index}`;
+            container.innerHTML += `
+            <div class="item-row">
                 <div class="item-top">
-                    <span class="item-name">${item.name}</span>
+                    <div class="item-name">${item.name}</div>
                     <div class="controls-wrapper">
-                        <span class="price-box">${item.price} LE</span>
-                        <button class="btn-action btn-minus" onclick="changeQty('${item.name.replace(/'/g,"\\'")}', ${item.price}, -1)">−</button>
-                        <span class="qty-num" id="qty-${id}">0</span>
-                        <button class="btn-action btn-plus" onclick="changeQty('${item.name.replace(/'/g,"\\'")}', ${item.price}, 1)">+</button>
+                        <button class="btn-action btn-minus" onclick="updateQty('${itemId}', '${item.name}', ${item.price}, -1, '${containerId}')">-</button>
+                        <div class="qty-num" id="qty-${itemId}">0</div>
+                        <button class="btn-action btn-plus" onclick="updateQty('${itemId}', '${item.name}', ${item.price}, 1, '${containerId}')">+</button>
+                        <div class="price-box">${item.price}</div>
                     </div>
                 </div>
-                ${item.desc ? `<p class="item-desc">${item.desc}</p>` : ''}
-                <div class="item-note-box" id="note-box-${id}">
-                    <span class="item-note-label">✏️ ملاحظة خاصة على هذا الصنف (اختياري)</span>
-                    <textarea class="item-note-input" id="note-${id}" placeholder="مثال: بدون بصل، إضافة صوص..." rows="2" onchange="saveNote('${item.name.replace(/'/g,"\\'")}', this.value)"></textarea>
+                <div class="item-note-box" id="note-box-${itemId}">
+                    <textarea class="item-note-input" id="note-input-${itemId}" placeholder="ملاحظة لهذا الصنف..." onchange="saveItemNote('${itemId}', this.value)"></textarea>
                 </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-    function saveNote(name, value) {
-        if (value.trim()) itemNotes[name] = value.trim();
-        else delete itemNotes[name];
-    }
-    function changeQty(name, price, change) {
-        const idx = cart.findIndex(i => i.name === name);
-        if (idx > -1) {
-            cart[idx].qty += change;
-            if (cart[idx].qty <= 0) { cart.splice(idx, 1); delete itemNotes[name]; }
-        } else if (change > 0) {
-            cart.push({ name, price, qty: 1 });
-        }
-        const current = cart.find(i => i.name === name);
-        const id = safeId(name);
-        const qtyEl = document.getElementById('qty-' + id);
-        const noteBox = document.getElementById('note-box-' + id);
-        if (qtyEl) qtyEl.innerText = current ? current.qty : 0;
-        if (noteBox) {
-            if (current && current.qty > 0) {
-                noteBox.classList.add('visible');
-            } else {
-                noteBox.classList.remove('visible');
-                const noteInput = document.getElementById('note-' + id);
-                if (noteInput) noteInput.value = '';
-                delete itemNotes[name];
-            }
-        }
-        updateUI();
-    }
-    function updateUI() {
-        const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-        const count = cart.reduce((s, i) => s + i.qty, 0);
-        document.getElementById('cart-bar').style.display = cart.length > 0 ? 'flex' : 'none';
-        document.getElementById('cart-total').innerText = total + ' LE';
-        document.getElementById('cart-count').innerText = count;
-        document.getElementById('final-total').innerText = total + deliveryFee;
-    }
-    function showOrderForm() {
-        document.getElementById('order-modal').style.display = 'block';
-        let html = '';
-        cart.forEach(i => {
-            const note = itemNotes[i.name];
-            html += `<div style="padding:8px 0;border-bottom:1px solid #f3f4f6;color:#374151;display:flex;justify-content:space-between;gap:8px;">
-                <div style="flex:1;">
-                    <span>${i.name} <span style="color:#ef4444;">(x${i.qty})</span></span>
-                    ${note ? `<div style="font-size:0.75rem;color:#666;margin-top:2px;">📝 ${note}</div>` : ''}
-                </div>
-                <span>${i.price * i.qty} LE</span>
             </div>`;
         });
-        document.getElementById('cart-items-list').innerHTML = html;
-        updateDelivery();
     }
+
+    for (let s in menuSections) renderSection(s, menuSections[s]);
+
+    function updateQty(id, name, price, change, cat) {
+        if (!cart[id]) cart[id] = { name: name, price: price, qty: 0, category: cat };
+        cart[id].qty += change;
+        if (cart[id].qty < 0) cart[id].qty = 0;
+        document.getElementById(`qty-${id}`).innerText = cart[id].qty;
+        document.getElementById(`note-box-${id}`).classList.toggle('visible', cart[id].qty > 0);
+        if (cart[id].qty === 0) { delete cart[id]; delete itemNotes[id]; }
+        updateCartBar();
+    }
+
+    function saveItemNote(id, note) { itemNotes[id] = note; }
+
+    function updateCartBar() {
+        let totalQty = 0; let totalPrice = 0; let chips = [];
+        for (let id in cart) {
+            totalQty += cart[id].qty; totalPrice += cart[id].qty * cart[id].price;
+            let prefix = categoryPrefixes[cart[id].category] || '';
+            let displayName = (prefix && !cart[id].name.includes(prefix.trim())) ? prefix + cart[id].name : cart[id].name;
+            chips.push(`<span class="summary-chip">${cart[id].qty}x ${displayName}</span>`);
+        }
+        document.getElementById('cart-summary-container').style.display = totalQty > 0 ? 'flex' : 'none';
+        document.getElementById('cart-count').innerText = totalQty;
+        document.getElementById('cart-total').innerText = totalPrice + ' LE';
+        document.getElementById('cart-summary-items').innerHTML = chips.join('');
+    }
+
+    function showOrderForm() { document.getElementById('order-modal').style.display = 'block'; renderCartList(); }
     function closeOrderForm() { document.getElementById('order-modal').style.display = 'none'; }
+
     function updateDelivery() {
-        const type = document.getElementById('delivery-type').value;
-        deliveryFee = type === 'outside' ? 40 : 0;
-        document.getElementById('cust-address').style.display = type === 'outside' ? 'block' : 'none';
-        updateUI();
+        let type = document.getElementById('delivery-type').value;
+        deliveryFee = (type === 'outside') ? 40 : 0;
+        document.getElementById('cust-address').style.display = (type === 'outside') ? 'block' : 'none';
+        renderCartList();
     }
+
+    function renderCartList() {
+        let html = ''; let sub = 0;
+        for (let id in cart) {
+            let linePrice = cart[id].qty * cart[id].price; sub += linePrice;
+            html += `<div style="display:flex;justify-content:space-between;font-weight:700;">
+                        <span>${cart[id].qty}x ${cart[id].name}</span>
+                        <span>${linePrice} LE</span>
+                     </div>`;
+            if(itemNotes[id]) html += `<div style="color:red;font-size:0.8rem;margin-bottom:8px;">- ملاحظة: ${itemNotes[id]}</div>`;
+        }
+        document.getElementById('cart-items-list').innerHTML = html;
+        document.getElementById('final-total').innerText = sub + deliveryFee;
+    }
+
     function sendOrder() {
-        const name = document.getElementById('cust-name').value.trim();
-        const phone = document.getElementById('cust-phone').value.trim();
-        const address = document.getElementById('cust-address').value.trim();
-        const type = document.getElementById('delivery-type').value;
-        const globalNotes = document.getElementById('global-notes').value.trim();
-        
-        if (!name || !phone || (type === 'outside' && !address))
-            return alert('يا بطل، راجع البيانات الناقصة (الاسم، الرقم، والعنوان لو دليفري)!');
-            
-        // بناء الرسالة بشكل نضيف ومنظم
-        let txt = `طلب جديد - Chickana\n\n`;
-        txt += `الاسم: ${name}\n`;
-        txt += `الهاتف: ${phone}\n`;
-        txt += `الاستلام: ${type === 'inside' ? 'داخل النادي' : 'توصيل خارج'}\n`;
-        
-        if (type === 'outside') {
-            txt += `العنوان: ${address}\n`;
+        const name = document.getElementById('cust-name').value;
+        const phone = document.getElementById('cust-phone').value;
+        if(!name || !/^01[0125][0-9]{8}$/.test(phone)) return alert('يرجى إدخال الاسم ورقم موبايل مصري صحيح (11 رقم)');
+
+        let msg = `طلب جديد\nالاسم: ${name}\nالموبايل: ${phone}\nالاستلام: ${document.getElementById('delivery-type').value === 'inside' ? 'داخل النادي' : 'توصيل'}\n\nالطلبات:\n`;
+        let sub = 0;
+        for (let id in cart) {
+            let prefix = categoryPrefixes[cart[id].category] || '';
+            let fullName = (prefix && !cart[id].name.includes(prefix.trim())) ? prefix + cart[id].name : cart[id].name;
+            let linePrice = cart[id].qty * cart[id].price; sub += linePrice;
+            msg += `${cart[id].qty}x ${fullName} = ${linePrice} ج\n`;
+            if(itemNotes[id]) msg += `   - ملاحظة: ${itemNotes[id]}\n`;
         }
-        
-        txt += `\nالطلبات:\n`;
-        cart.forEach(i => {
-            txt += `${i.name} (العدد: ${i.qty}) بـ ${i.price * i.qty} LE`;
-            // لو في ملاحظة على الصنف ده هتتكتب تحته
-            if (itemNotes[i.name]) {
-                txt += `\nملاحظة: ${itemNotes[i.name]}`;
-            }
-            txt += '\n'; // سطر جديد للصنف اللي بعده
-        });
-        
-        if (deliveryFee > 0) {
-            txt += `\nخدمة التوصيل: 40 LE\n`;
-        }
-        
-        if (globalNotes) {
-            txt += `ملاحظات عامة: ${globalNotes}\n`;
-        }
-        
-        txt += `\nإجمالي الحساب: ${document.getElementById('final-total').innerText} LE`;
-        
-        // فتح الواتساب وإرسال الرسالة
-        window.open(`https://wa.me/201277720430?text=${encodeURIComponent(txt)}`, '_blank');
+        msg += `\nرسوم التوصيل: ${deliveryFee} ج\nالإجمالي: ${sub + deliveryFee} ج`;
+        if(document.getElementById('global-notes').value) msg += `\n\nملاحظات عامة: ${document.getElementById('global-notes').value}`;
+
+        window.open(`https://wa.me/201277720430?text=${encodeURIComponent(msg)}`, '_blank');
     }
-    Object.entries(menuSections).forEach(([key, items]) => renderSection(key, items));
 </script>
 </body>
 </html>
