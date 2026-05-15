@@ -9,7 +9,7 @@
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Cairo', sans-serif; background-color: #ffffff; color: #1a1a1a; padding-bottom: 150px; direction: rtl; scroll-behavior: smooth; }
-        
+
         /* البحث */
         .search-container { padding: 10px; background: #fff; position: sticky; top: 0; z-index: 1001; border-bottom: 2px solid #e61e25; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .search-wrapper { position: relative; width: 100%; max-width: 576px; margin: 0 auto; }
@@ -17,7 +17,7 @@
         .clear-search { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; display: none; color: #999; font-weight: bold; font-size: 1.2rem; }
 
         .hero-section { background-image: url('jpg.58304.jpg'); background-size: cover; background-position: center; height: 220px; border-bottom: 4px solid #e61e25; background-color: #111; }
-        
+
         /* شريط التنقل التفاعلي */
         .sticky-nav { position: sticky; top: 68px; z-index: 1000; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; overflow-x: auto; white-space: nowrap; padding: 10px; gap: 8px; scrollbar-width: none; }
         .sticky-nav::-webkit-scrollbar { display: none; }
@@ -29,18 +29,19 @@
         .category-img { width: 100%; height: 150px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; border: 2px solid #fff; }
         .section-title { color: #e61e25; font-size: 1.4rem; font-weight: 900; border-bottom: 2px solid #e61e25; margin: 20px 0 15px; text-align: center; padding-bottom: 8px; }
         .sub-title { color: #ffb300; font-size: 1.2rem; font-weight: 900; margin: 15px 0 10px; text-align: right; }
-        
+
         .item-row { padding: 12px 0; border-bottom: 1px solid #e5e5e5; }
         .item-row:last-child { border-bottom: none; }
         .item-top { display: flex; justify-content: space-between; align-items: center; }
         .item-name { font-weight: 900; font-size: 1.05rem; flex: 1; padding-left: 10px; line-height: 1.3; }
+        .item-desc { font-size: 0.85rem; color: #666; margin-top: 4px; font-weight: 400; display: block; }
         .controls-wrapper { display: flex; align-items: center; gap: 8px; }
         .price-box { font-weight: 900; color: #e61e25; min-width: 65px; text-align: left; font-size: 1rem; }
-        
+
         .btn-action { width: 34px; height: 34px; border-radius: 8px; font-weight: bold; font-size: 1.2rem; cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; }
         .btn-plus { background: #ffcc00; border: 1px solid #cca300; color: #000; }
         .btn-minus { background: #e0e0e0; border: 1px solid #ccc; color: #555; }
-        
+
         .note-box { display: none; margin-top: 10px; animation: slideDown 0.2s ease; }
         .note-input { width: 100%; padding: 10px; border-radius: 8px; border: 1px dashed #ffb300; background: #fffdf0; font-size: 0.85rem; font-family: 'Cairo'; outline: none; }
 
@@ -106,6 +107,7 @@
         <div class="menu-card section-group" id="sec-offers" style="border-top:4px solid #ffcc00;">
             <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80" class="category-img">
             <h2 class="section-title">🔥 عروض التوفير</h2>
+            <p style="text-align: center; font-weight: 900; color: #e61e25; margin-bottom: 10px;">الكرانشي خارج العرض</p>
             <div id="list-offers"></div>
         </div>
 
@@ -206,7 +208,16 @@
         'pizza-crunchy': [{n:'كرانشي تشيكن رانش', p:199}, {n:'كرانشي تشيكن دايناميت', p:199}],
         'pizza-meat': [{n:'ببروني', p:199}, {n:'سوبر سوبريم', p:199}, {n:'عشاق اللحوم', p:199}],
         'pizza-addons': [{n:'إضافة حشو أطراف', p:65}, {n:'إضافة بيتزا نص ونص', p:20}],
-        'sandwiches-main': [{n:'تشيكن جريل', p:145}, {n:'تشيكن بولو', p:165}, {n:'تويستر بطاطس', p:65}, {n:'تويستر فراخ', p:99}, {n:'TNT فاير', p:150}, {n:'TNT سوبريم', p:150}, {n:'بيج تشيكا', p:150}],
+        'sandwiches-main': [
+            {n:'مكس وتش', p:180, d:'بنقدم لك طعم جديد مكس ما بين برجر لحم جريل فرايد تشيكن استربس'},
+            {n:'تشيكن جريل', p:145}, 
+            {n:'تشيكن بولو', p:165}, 
+            {n:'تويستر بطاطس', p:65}, 
+            {n:'تويستر فراخ', p:99}, 
+            {n:'TNT فاير', p:150}, 
+            {n:'TNT سوبريم', p:150}, 
+            {n:'بيج تشيكا', p:150}
+        ],
         'sandwiches-sd': [{n:'كلاسيك (سنجل)', p:115}, {n:'كلاسيك (دبل)', p:145}, {n:'فولكانو (سنجل)', p:115}, {n:'فولكانو (دبل)', p:145}, {n:'رانش (سنجل)', p:129}, {n:'رانش (دبل)', p:155}, {n:'ديناميت (سنجل)', p:129}, {n:'ديناميت (دبل)', p:155}, {n:'بيج بوس (سنجل)', p:129}, {n:'بيج بوس (دبل)', p:155}, {n:'تشيزي (سنجل)', p:139}, {n:'تشيزي (دبل)', p:165}, {n:'بيف برجر (سنجل)', p:120}, {n:'بيف برجر (دبل)', p:150}],
         'sandwiches-combo': [{n:'إضافة كومبو عادي', p:55}, {n:'إضافة كومبو لارج', p:120}],
         'extra': [{n:'2 تويست + بطاطس', p:205}, {n:'تويست + بطاطس + ريزو', p:205}, {n:'قطعتين فراخ + بطاطس + ريزو', p:230}, {n:'قطعتين فراخ + بطاطس + تويست', p:230}, {n:'كلاسيك كبير + ريزو + بطاطس', p:230}, {n:'كلاسيك كبير + قطعتين فراخ + بطاطس', p:230}, {n:'عرض التوينز: 2 سنجل + بطاطس', p:250}, {n:'عرض التوينز: 2 دبل + بطاطس', p:330}, {n:'سنجل + بطاطس + كول سلو', p:170}],
@@ -248,13 +259,17 @@
     }
 
     function createRowHTML(item, id, catKey) {
+        let descriptionHTML = item.d ? `<span class="item-desc">${item.d}</span>` : '';
         return `
         <div class="item-row" data-name="${item.n}">
             <div class="item-top">
-                <div class="item-name">${item.n}</div>
+                <div class="item-name">
+                    ${item.n}
+                    ${descriptionHTML}
+                </div>
                 <div class="controls-wrapper">
                     <div class="price-box">${item.p} LE</div>
-                    <button class="btn-action btn-minus" id="btnminus-${id}" onclick="updateQty('${id}', '${item.n}', ${item.p}, -1, '${catKey}')">-</button>
+                    <button class="btn-action btn-minus" id="btnminus-${id}" onclick="updateQty('${id}', '${item.n}', ${item.p}, -1, '${catKey}')">-</button>       
                     <div class="qty-val qty-${id}" style="font-weight:900; color:#e61e25; width:20px; text-align:center; font-size:1.1rem;">0</div>
                     <button class="btn-action btn-plus" id="btnplus-${id}" onclick="updateQty('${id}', '${item.n}', ${item.p}, 1, '${catKey}')">+</button>
                 </div>
@@ -391,7 +406,7 @@
         let addr = document.getElementById('user-addr').value.trim();
         if(document.getElementById('deliv-choice').value === 'outside' && !addr) return alert('يرجى كتابة العنوان');
         let gNotes = document.getElementById('order-notes').value.trim();
-        
+
         let msg = `طلب جديد\nالاسم: ${name}\nالموبايل: ${phone}\nالاستلام: ${delivType}\n`;
         if(document.getElementById('deliv-choice').value === 'outside') msg += `العنوان: ${addr}\n`;
         msg += `\nالاصناف:\n`;
