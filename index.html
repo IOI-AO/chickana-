@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chickana Menu - Pro Edition (With Offer)</title>
+    <title>Chickana Menu - Pro Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -68,9 +68,6 @@
         /* === POP على الرقم === */
         @keyframes ckPop { 0%{transform:scale(1)} 45%{transform:scale(1.7)} 100%{transform:scale(1)} }
         .ck-pop { animation: ckPop 0.3s ease forwards; }
-
-        @keyframes weekendPulse { 0% {box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4);} 70% {box-shadow: 0 0 0 10px rgba(22, 163, 74, 0);} 100% {box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);} }
-        .weekend-nav-pulse { animation: weekendPulse 2s infinite; background: #111 !important; color: #ffcc00 !important; border-color: #ffcc00 !important; }
     </style>
 </head>
 <body>
@@ -86,8 +83,6 @@
 
     <nav class="sticky-nav" id="main-nav">
         <div class="nav-link" id="nav-reorder" data-target="sec-reorder" onclick="jumpTo('sec-reorder')" style="display:none">اطلبها مجدداً</div>
-        <!-- رابط العرض ظاهر دائماً -->
-        <div class="nav-link weekend-nav-pulse" id="nav-weekend" data-target="sec-weekend" onclick="jumpTo('sec-weekend')" style="display:inline-block">🔥 عرض الخميس والجمعة</div>
         <div class="nav-link active" id="nav-offers" data-target="sec-offers" onclick="jumpTo('sec-offers')">عروض التوفير</div>
         <div class="nav-link" id="nav-pizza" data-target="sec-pizza" onclick="jumpTo('sec-pizza')">البيتزا</div>
         <div class="nav-link" id="nav-sandwiches" data-target="sec-sandwiches" onclick="jumpTo('sec-sandwiches')">الساندوتشات</div>
@@ -107,13 +102,6 @@
         <div class="menu-card section-group" id="sec-reorder" style="display:none; border: 4px solid #ffcc00;">
             <h2 class="section-title">🔥 اطلبها مجدداً</h2>
             <div id="reorder-list"></div>
-        </div>
-
-        <!-- سكشن عرض الخميس والجمعة ظاهر دائماً -->
-        <div class="menu-card section-group" id="sec-weekend" style="border: 4px dashed #111; background: #fffdf0; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
-            <h2 class="section-title" style="color: #111; border-bottom: 2px solid #111;">🚨 عرض الخميس والجمعة 🚨</h2>
-            <p style="text-align: center; font-weight: 900; color: #16a34a; margin-bottom: 10px;">العرض الأقوى متاح الآن!</p>
-            <div id="list-weekend-offer"></div>
         </div>
 
         <div class="menu-card section-group" id="sec-offers" style="border-top:4px solid #ffcc00;">
@@ -220,7 +208,6 @@
 
 <script>
     const menuData = {
-        'weekend-offer': [{n:'2 ساندويتش بيف برجر + 2 بطاطس + 2 كانز', p:300}],
         'offers': [{n:'عرض الدويتو (2 بيتزا)', p:380}, {n:'عرض التريو (3 بيتزا)', p:550}],
         'pizza-classic': [{n:'مارجريتا', p:160}, {n:'خضراوات سوبريم', p:160}],
         'pizza-chicken': [{n:'تشيكن باربكيو', p:199}, {n:'تشيكن رانش', p:199}, {n:'سبايسى تشيكن رانش', p:199}, {n:'تشيكن مكسيكانا', p:199}],
@@ -258,7 +245,6 @@
         else if(catKey.startsWith('sandwiches')) prefix = 'ساندوتش ';
         else if(catKey.startsWith('meals')) prefix = 'وجبة ';
         else if(catKey === 'offers') prefix = 'عرض ';
-        else if(catKey === 'weekend-offer') prefix = 'عرض ';
 
         // إذا كان الاسم يحتوي بالفعل على الكلمة التعريفية، لا نكررها
         if (itemName.includes(prefix.trim())) return '';
