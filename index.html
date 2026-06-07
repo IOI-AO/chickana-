@@ -55,10 +55,10 @@
         /* شريط اختصار الطلب (الـ Chips) + السلة */
         #cart-bar-container { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1100; display: none; flex-direction: column; background: transparent; }
         #cart-summary-items { background: rgba(255, 255, 255, 0.95); padding: 10px 20px; font-size: 0.85rem; font-weight: 700; max-height: 90px; overflow-y: auto; text-align: right; border-top: 3px solid #e61e25; border-radius: 20px 20px 0 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); }
-        
+
         .summary-chip { background: #f3f4f6; color: #dc2626; padding: 6px 12px; border-radius: 20px; margin: 4px; display: inline-flex; align-items: center; border: 1px solid #e5e7eb; font-weight: 900; gap: 8px;}
         .remove-chip-btn { background: #dc2626; color: #fff; border-radius: 50%; width: 20px; height: 20px; display: inline-flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; }
-        
+
         #cart-bar { background: #e61e25; color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 900; font-size: 1.1rem; cursor: pointer; }
 
         .footer { background: #ffcc00; padding: 40px 20px; text-align: center; margin-top: 40px; border-top: 5px solid #e61e25; }
@@ -127,7 +127,7 @@
         <div class="menu-card section-group" id="sec-new" style="border-top:4px solid #e61e25;">
             <h2 class="section-title">🌟 الجديد في تشيكانا</h2>
             <div class="custom-p-box">
-                <div class="custom-p-title">تشيكانا بيتزا (عجينة حبة كاملة) - 230 LE</div>
+                <div class="custom-p-title">تشيكانا بيتزا (عجينة حبة كاملة) - 250 LE</div>
                 <select id="cp-fill-top" class="custom-p-select">
                     <option value="">اختر الحشو</option>
                     <option value="تشيكن جريل">تشيكن جريل</option>
@@ -163,7 +163,7 @@
 
             <!-- بيتزا الحبة الكاملة داخل قسم البيتزا -->
             <div class="custom-p-box" style="background:#fff;">
-                <div class="custom-p-title">تشيكانا بيتزا (عجينة حبة كاملة) - 230 LE</div>
+                <div class="custom-p-title">تشيكانا بيتزا (عجينة حبة كاملة) - 250 LE</div>
                 <select id="cp-fill-pizza" class="custom-p-select">
                     <option value="">اختر الحشو</option>
                     <option value="تشيكن جريل">تشيكن جريل</option>
@@ -262,7 +262,7 @@
 
             <!-- قائمة مراجعة العناصر بالزيادة والنقصان والحذف -->
             <div id="final-items-list" style="margin:20px 0; border-bottom:1px solid #eee; padding-bottom:10px; max-height: 250px; overflow-y: auto;"></div>
-            
+
             <input type="text" id="user-name" placeholder="الاسم بالكامل" style="width:100%; padding:14px; margin-bottom:10px; border:1px solid #ddd; border-radius:10px; font-family:'Cairo';">
             <input type="tel" id="user-phone" placeholder="رقم الموبايل (11 رقم مصري)" maxlength="11" style="width:100%; padding:14px; margin-bottom:10px; border:1px solid #ddd; border-radius:10px; font-family:'Cairo';">
             <select id="deliv-choice" onchange="toggleAddr()" style="width:100%; padding:14px; margin-bottom:10px; border:1px solid #ddd; border-radius:10px; font-family:'Cairo'; font-weight:700;">
@@ -271,7 +271,7 @@
             </select>
             <textarea id="user-addr" placeholder="العنوان بالتفصيل" style="display:none; width:100%; padding:14px; margin-bottom:10px; border:2px solid #e61e25; border-radius:10px; height:80px; font-family:'Cairo'; resize:none;"></textarea>
             <textarea id="order-notes" placeholder="ملاحظات عامة على الطلب (اختياري)..." style="width:100%; padding:14px; margin-bottom:10px; border:1px dashed #ffb300; border-radius:10px; height:60px; font-family:'Cairo'; resize:none; background:#fffdf0;"></textarea>
-            
+
             <div style="text-align:center; font-weight:900; font-size:1.4rem; color:#dc2626; margin:20px 0;">الإجمالي الكلي: <span id="grand-total">0</span> LE</div>
             <button id="btn-send-wa" onclick="sendToWhatsApp()" style="width:100%; background:#16a34a; color:#fff; padding:18px; border-radius:12px; font-weight:900; font-size:1.1rem; border:none; cursor:pointer;">تأكيد وإرسال واتساب</button>
             <button onclick="closeOrderModal()" style="width:100%; background:none; color:#777; padding:12px; margin-top:8px; border:none; cursor:pointer; font-weight:700;">رجوع للقائمة</button>
@@ -373,7 +373,7 @@
         // معرف فريد للجمع بين نوع الحشو والصوص
         let uniqueId = 'cp_' + fill.replace(/\s/g, '') + '_' + sauce.replace(/\s/g, '');
         let itemName = `بيتزا حبة كاملة (${fill} / صوص ${sauce})`;
-        let price = 230;
+        let price = 250; // تم تعديل السعر هنا إلى 250
 
         if(!cart[uniqueId]) {
             cart[uniqueId] = { name: itemName, price: price, qty: 0, note: '', cat: 'custom' };
@@ -397,7 +397,6 @@
             openOrderModal();
         }
     }
-
     function updateQty(id, name, price, delta, catKey) {
         if(!cart[id]) cart[id] = { name, price, qty: 0, note: '', cat: catKey };
         cart[id].qty += delta;
@@ -423,13 +422,13 @@
         // تحديث عدادات الأصناف على شاشة المنيو الأساسية
         document.querySelectorAll('.qty-val').forEach(el => el.innerText = '0');
         document.querySelectorAll('.note-box').forEach(el => el.style.display = 'none');
-        
+
         let totalQty = 0; let totalPrice = 0; let chipsHTML = '';
-        
+
         for(let id in cart) {
             let item = cart[id];
             totalQty += item.qty; totalPrice += item.qty * item.price;
-            
+
             if(item.cat !== 'custom') {
                 document.querySelectorAll(`.qty-${id}`).forEach(el => {
                     el.innerText = item.qty;
@@ -437,7 +436,7 @@
                 });
                 document.querySelectorAll(`.note-box-${id}`).forEach(el => el.style.display = 'block');
             }
-            
+
             let prefix = getSmartPrefix(item.cat, item.name);
             chipsHTML += `
             <span class="summary-chip">
@@ -445,7 +444,7 @@
                 <span class="remove-chip-btn" onclick="event.stopPropagation(); removeCartItem('${id}')">✖</span>
             </span>`;
         }
-        
+
         document.getElementById('cart-summary-items').innerHTML = chipsHTML;
         document.getElementById('cart-count').innerText = totalQty;
         document.getElementById('cart-total').innerText = totalPrice + ' LE';
@@ -527,12 +526,12 @@
 
         document.getElementById('order-modal').style.display = 'block';
         let h = ''; let sum = 0;
-        
+
         for(let id in cart) {
             let item = cart[id];
             let p = item.qty * item.price; sum += p;
             let prefix = getSmartPrefix(item.cat, item.name);
-            
+
             h += `
             <div class="cart-modal-item-row">
                 <div style="flex:1; text-align:right;">
@@ -548,7 +547,7 @@
                 </div>
             </div>`;
         }
-        
+
         document.getElementById('final-items-list').innerHTML = h;
         let fee = document.getElementById('deliv-choice').value === 'outside' ? 40 : 0;
         document.getElementById('grand-total').innerText = sum + fee;
@@ -613,7 +612,7 @@
         localStorage.setItem('chickana_history_v2', JSON.stringify(cart));
         window.open(`https://wa.me/201277720430?text=${encodeURIComponent(msg)}`, '_blank');
     }
-    
+
     let _ckToastTimer = null;
     function ckShowToast(msg) {
         let t = document.getElementById('ck-toast');
